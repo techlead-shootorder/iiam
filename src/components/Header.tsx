@@ -13,7 +13,7 @@ const topNavLinks = [
 ]
 
 const topNavRightLinks = [
-  { label: 'Programs', href: '#' },
+  { label: 'Programs', href: 'programs' },
   { label: 'Charters', href: '#' },
   { label: 'Careers', href: '#' },
   { label: 'Contact Us', href: '#' },

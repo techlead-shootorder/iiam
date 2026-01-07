@@ -19,12 +19,12 @@ const HeroSection = () => (
   <section className="relative h-[400px] md:h-[500px]">
     <div className="absolute inset-0">
       <Image
-        src="/hero-conference.png"
+        src="/Association_Banner.jpg"
         alt="IAAM Conference"
         fill
         className="object-cover"
       />
-      <div className="absolute inset-0 bg-gradient-to-r from-[hsl(197,63%,22%)]/80 to-[hsl(197,63%,22%)]/40" />
+      <div className="absolute inset-0" />
     </div>
     <div className="relative container mx-auto px-4 h-full flex flex-col justify-center max-w-6xl">
       <h1 className="font-serif text-3xl md:text-4xl lg:text-5xl text-white italic mb-4 max-w-2xl">
@@ -33,7 +33,7 @@ const HeroSection = () => (
       <p className="text-white/90 text-base md:text-lg max-w-xl mb-6">
         A global Scientific Community shaping the future of materials technology and sustainability.
       </p>
-      <button className="bg-[hsl(197,63%,22%)] hover:bg-[hsl(197,63%,15%)] text-white px-6 py-3 rounded-sm font-medium w-fit transition-colors">
+      <button className="bg-[hsl(197,63%,22%)] font-bold hover:bg-white hover:text-[hsl(197,63%,22%)] text-white px-6 py-3 rounded-sm w-fit transition-colors">
         Join or Renew Membership
       </button>
     </div>
@@ -205,7 +205,7 @@ export default function Association() {
           </div>
           <div>
             <Image
-              src="/conference-auditorium.jpg"
+              src="/Association_2_Img.jpg"
               alt="IAAM Conference Auditorium"
               width={600}
               height={400}
@@ -218,7 +218,7 @@ export default function Association() {
       {/* Our Role */}
       <ContentImageSection
         title="Our Role"
-        imageSrc="/speaker-discussion.png"
+        imageSrc="/Our_Role.jpg"
         imageAlt="IAAM Conference"
         imagePosition="left"
         bgColor="bg-gray-50"
@@ -231,49 +231,66 @@ export default function Association() {
 
       <VisionMissionSection />
 
-      {/* Global Impact */}
-      <ContentImageSection
-        title="Impact & Milestones"
-        imageSrc="/stockholm-waterfront.jpg"
-        imageAlt="IAAM Group Photo"
-        imagePosition="left"
-        contentBgColor="bg-[hsl(197,63%,22%)]"
-      >
-        <p className="mb-4 text-sm">
-          Over 15 years of advancing materials, IAAM has achieved:
+      {/* Global Impact Section */}
+      <SectionContainer>
+        <h2 className="font-serif text-2xl md:text-3xl text-[hsl(210,20%,20%)] font-bold mb-2">
+          GLOBAL IMPACT
+        </h2>
+        <p className="text-[hsl(210,20%,20%)]/70 mb-8">
+          Over 15 Years of Connecting Science, Industry, and Innovation Worldwide
         </p>
-        <ul className="space-y-2 text-sm">
-          <li className="flex items-start gap-2">
-            <span className="w-1.5 h-1.5 bg-white rounded-full mt-2 flex-shrink-0" />
-            100+ international conferences and 2,100+ symposia
-          </li>
-          <li className="flex items-start gap-2">
-            <span className="w-1.5 h-1.5 bg-white rounded-full mt-2 flex-shrink-0" />
-            30,000+ delegates from over 135 countries
-          </li>
-          <li className="flex items-start gap-2">
-            <span className="w-1.5 h-1.5 bg-white rounded-full mt-2 flex-shrink-0" />
-            Global Advanced Materials Congress (AMC) and IAAM Fellow Summit assemblies
-          </li>
-          <li className="flex items-start gap-2">
-            <span className="w-1.5 h-1.5 bg-white rounded-full mt-2 flex-shrink-0" />
-            Headquarters in Sweden, 35 National Councils including Europe, North America, Latin America, Africa-Middle East, and Asia-Pacific HQ in China
-          </li>
-          <li className="flex items-start gap-2">
-            <span className="w-1.5 h-1.5 bg-white rounded-full mt-2 flex-shrink-0" />
-            Active participation in United Nations (UN) platforms
-          </li>
-          <li className="flex items-start gap-2">
-            <span className="w-1.5 h-1.5 bg-white rounded-full mt-2 flex-shrink-0" />
-            Launch of dedicated institutes and net-zero innovation programs
-          </li>
-        </ul>
-      </ContentImageSection>
+        
+        <div className="flex flex-col md:flex-row overflow-hidden rounded-sm shadow-sm">
+          <div className="md:w-2/5">
+            <Image
+              src="/global_impact.jpg"
+              alt="IAAM Group Photo"
+              width={400}
+              height={300}
+              className="w-full h-full object-cover"
+            />
+          </div>
+          <div className="md:w-3/5 bg-[hsl(197,63%,22%)] p-6 md:p-8">
+            <h3 className="font-serif text-xl text-white font-bold mb-3">
+              Impact & Milestones
+            </h3>
+            <p className="text-white/90 mb-4 text-sm">
+              Over 15 years of advancing materials, IAAM has achieved:
+            </p>
+            <ul className="text-white/90 space-y-2 text-sm">
+              <li className="flex items-start gap-2">
+                <span className="w-1.5 h-1.5 bg-white rounded-full mt-2 flex-shrink-0" />
+                100+ international conferences and 2,100+ symposia
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="w-1.5 h-1.5 bg-white rounded-full mt-2 flex-shrink-0" />
+                30,000+ delegates from over 135 countries
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="w-1.5 h-1.5 bg-white rounded-full mt-2 flex-shrink-0" />
+                Global Advanced Materials Congress (AMC) and IAAM Fellow Summit assemblies
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="w-1.5 h-1.5 bg-white rounded-full mt-2 flex-shrink-0" />
+                Headquarters in Sweden, 35 National Councils including Europe, North America, Latin America, Africa-Middle East, and Asia-Pacific HQ in China
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="w-1.5 h-1.5 bg-white rounded-full mt-2 flex-shrink-0" />
+                Active participation in United Nations (UN) platforms, including the UN Environment Assembly, UN Water Conference, and UN Framework Convention on Climate Change.
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="w-1.5 h-1.5 bg-white rounded-full mt-2 flex-shrink-0" />
+                Launch of dedicated institutes and net-zero innovation programs
+              </li>
+            </ul>
+          </div>
+        </div>
+      </SectionContainer>
 
       {/* Leadership & Governance */}
       <ContentImageSection
         title="Leadership & Governance"
-        imageSrc="/speaker-discussion.png"
+        imageSrc="/Leadership & Governance.jpg"
         imageAlt="IAAM Leadership Meeting"
         imagePosition="right"
         bgColor="bg-gray-50"
@@ -300,7 +317,7 @@ export default function Association() {
       {/* Research, Education & Institutes */}
       <ContentImageSection
         title="Research, Education & Institutes"
-        imageSrc="/conference-auditorium.jpg"
+        imageSrc="/Research, Education & Institutes.jpg"
         imageAlt="IAAM Research Networking"
         imagePosition="right"
         contentBgColor="bg-[hsl(197,63%,22%)]"
@@ -333,7 +350,7 @@ export default function Association() {
         <div className="grid md:grid-cols-2 gap-8 items-center">
           <div>
             <Image
-              src="/speaker-discussion.png"
+              src="/Strategic_Priorities.jpg"
               alt="IAAM Strategic Meeting"
               width={400}
               height={300}
@@ -396,7 +413,7 @@ export default function Association() {
       {/* Global Community of Excellence */}
       <ContentImageSection
         title="A Global Community of Excellence"
-        imageSrc="/conference-auditorium.jpg"
+        imageSrc="/Global_Community.jpg"
         imageAlt="IAAM Global Community"
         imagePosition="left"
         bgColor="bg-gray-50"
@@ -447,7 +464,7 @@ export default function Association() {
           </div>
           <div className="md:w-1/2">
             <Image
-              src="/conference-auditorium.jpg"
+              src="/Contact_IAAM.jpg"
               alt="IAAM Networking"
               width={400}
               height={300}
