@@ -45,7 +45,7 @@ function HeroSection() {
           className="object-cover"
           priority
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/30 to-transparent" />
+        <div className="absolute inset-0 " />
       </div>
       <div className="relative container mx-auto px-4 h-full flex flex-col justify-center max-w-6xl">
         <h1 className="font-sans text-3xl md:text-4xl lg:text-5xl text-white mb-4 max-w-xl leading-tight">

@@ -34,7 +34,6 @@ export default function Association() {
       <StrategicPrioritiesSection />
       <NetZeroSection />
       <GlobalCommunitySection />
-      <CTASection />
       <ContactSection />
 
       <Footer />
@@ -445,39 +444,6 @@ function GlobalCommunitySection() {
           <p className="text-[hsl(210,20%,20%)]/70 mt-4">
             Recognized prestigious awards and fellowships
           </p>
-        </div>
-      </div>
-    </SectionContainer>
-  )
-}
-
-// CTA Section
-function CTASection() {
-  return (
-    <SectionContainer bgColor="bg-white" className="py-0">
-      <div className="grid md:grid-cols-2 gap-0 items-stretch">
-        {/* Left side - CTA Content */}
-        <div className="bg-[hsl(197,63%,22%)] p-8 md:p-12 flex flex-col justify-center">
-          <h2 className="font-sans text-2xl md:text-3xl font-bold text-white mb-4 leading-tight">
-            Be a Part of the Global IAAM Community
-          </h2>
-          <p className="text-white/90 mb-8 text-base">
-            Connect Globally. Grow Professionally. Create impact
-          </p>
-          
-          <div className="flex flex-wrap gap-4">
-            <button className="bg-[hsl(197,63%,15%)] font-semibold border border-white/30 text-white px-6 py-3 rounded hover:bg-[hsl(197,63%,10%)] transition-colors">
-              Apply for Membership
-            </button>
-            <button className="bg-[hsl(197,63%,15%)] font-semibold border border-white/30 text-white px-6 py-3 rounded hover:bg-[hsl(197,63%,10%)] transition-colors">
-              Renew Membership
-            </button>
-          </div>
-        </div>
-        
-        {/* Right side - Gray area */}
-        <div className="bg-gray-200 min-h-[300px] md:min-h-0">
-          {/* Empty gray area matching the first image */}
         </div>
       </div>
     </SectionContainer>
