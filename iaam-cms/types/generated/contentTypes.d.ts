@@ -446,13 +446,37 @@ export interface ApiAssociationPageAssociationPage
       'sections.association-about',
       false
     >;
+    AssociationContact: Schema.Attribute.Component<
+      'sections.association-contact',
+      false
+    >;
+    AssociationGlobalCommunity: Schema.Attribute.Component<
+      'sections.association-global-community',
+      false
+    >;
     AssociationGlobalImpact: Schema.Attribute.Component<
       'sections.association-global-impact',
       false
     >;
     AssociationHero: Schema.Attribute.Component<'sections.hero-section', false>;
+    AssociationLeadership: Schema.Attribute.Component<
+      'sections.association-leadership',
+      false
+    >;
+    AssociationNetZero: Schema.Attribute.Component<
+      'sections.association-net-zero',
+      false
+    >;
     AssociationOurRole: Schema.Attribute.Component<
       'sections.association-our-role',
+      false
+    >;
+    AssociationResearchEducation: Schema.Attribute.Component<
+      'sections.association-research-education',
+      false
+    >;
+    AssociationStrategicPriorities: Schema.Attribute.Component<
+      'sections.association-strategic-priorities',
       false
     >;
     AssociationVisionMission: Schema.Attribute.Component<

@@ -39,6 +39,37 @@ export interface SectionsAssociationAbout extends Struct.ComponentSchema {
   };
 }
 
+export interface SectionsAssociationContact extends Struct.ComponentSchema {
+  collectionName: 'components_sections_association_contacts';
+  info: {
+    displayName: 'AssociationContact';
+  };
+  attributes: {
+    description: Schema.Attribute.Blocks;
+    headline: Schema.Attribute.String;
+    image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    subTitle: Schema.Attribute.String;
+  };
+}
+
+export interface SectionsAssociationGlobalCommunity
+  extends Struct.ComponentSchema {
+  collectionName: 'components_sections_association_global_communities';
+  info: {
+    displayName: 'AssociationGlobalCommunity';
+  };
+  attributes: {
+    closingText: Schema.Attribute.String;
+    CommunityPoint: Schema.Attribute.Component<
+      'sections.community-point',
+      true
+    >;
+    image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    intro: Schema.Attribute.String;
+    title: Schema.Attribute.String;
+  };
+}
+
 export interface SectionsAssociationGlobalImpact
   extends Struct.ComponentSchema {
   collectionName: 'components_sections_association_global_impacts';
@@ -55,6 +86,36 @@ export interface SectionsAssociationGlobalImpact
   };
 }
 
+export interface SectionsAssociationLeadership extends Struct.ComponentSchema {
+  collectionName: 'components_sections_association_leaderships';
+  info: {
+    displayName: 'AssociationLeadership';
+  };
+  attributes: {
+    description: Schema.Attribute.Blocks;
+    image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    LeadershipPoint: Schema.Attribute.Component<
+      'sections.leadership-point',
+      true
+    >;
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface SectionsAssociationNetZero extends Struct.ComponentSchema {
+  collectionName: 'components_sections_association_net_zeros';
+  info: {
+    displayName: 'AssociationNetZero';
+  };
+  attributes: {
+    leftText: Schema.Attribute.String;
+    leftTextBold: Schema.Attribute.String;
+    rightText: Schema.Attribute.String;
+    rightTextBold: Schema.Attribute.String;
+    sectionTitle: Schema.Attribute.String;
+  };
+}
+
 export interface SectionsAssociationOurRole extends Struct.ComponentSchema {
   collectionName: 'components_sections_association_our_roles';
   info: {
@@ -63,6 +124,34 @@ export interface SectionsAssociationOurRole extends Struct.ComponentSchema {
   attributes: {
     description: Schema.Attribute.Blocks;
     image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface SectionsAssociationResearchEducation
+  extends Struct.ComponentSchema {
+  collectionName: 'components_sections_association_research_educations';
+  info: {
+    displayName: 'AssociationResearchEducation';
+  };
+  attributes: {
+    image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    intro: Schema.Attribute.String;
+    ResearchPoint: Schema.Attribute.Component<'sections.research-point', true>;
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface SectionsAssociationStrategicPriorities
+  extends Struct.ComponentSchema {
+  collectionName: 'components_sections_association_strategic_priorities';
+  info: {
+    displayName: 'AssociationStrategicPriorities';
+  };
+  attributes: {
+    image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    intro: Schema.Attribute.String;
+    PriorityPoint: Schema.Attribute.Component<'sections.priority-point', true>;
     title: Schema.Attribute.String;
   };
 }
@@ -95,6 +184,16 @@ export interface SectionsCards extends Struct.ComponentSchema {
     link: Schema.Attribute.String;
     title: Schema.Attribute.String;
     variant: Schema.Attribute.Enumeration<['primary', 'light']>;
+  };
+}
+
+export interface SectionsCommunityPoint extends Struct.ComponentSchema {
+  collectionName: 'components_sections_community_points';
+  info: {
+    displayName: 'CommunityPoint';
+  };
+  attributes: {
+    text: Schema.Attribute.String;
   };
 }
 
@@ -173,6 +272,16 @@ export interface SectionsJoinSection extends Struct.ComponentSchema {
     description: Schema.Attribute.Blocks;
     leftCard: Schema.Attribute.Component<'sections.left-card', true>;
     title: Schema.Attribute.String;
+  };
+}
+
+export interface SectionsLeadershipPoint extends Struct.ComponentSchema {
+  collectionName: 'components_sections_leadership_points';
+  info: {
+    displayName: 'LeadershipPoint';
+  };
+  attributes: {
+    text: Schema.Attribute.String;
   };
 }
 
@@ -258,28 +367,58 @@ export interface SectionsNewsSection extends Struct.ComponentSchema {
   };
 }
 
+export interface SectionsPriorityPoint extends Struct.ComponentSchema {
+  collectionName: 'components_sections_priority_points';
+  info: {
+    displayName: 'PriorityPoint';
+  };
+  attributes: {
+    text: Schema.Attribute.String;
+  };
+}
+
+export interface SectionsResearchPoint extends Struct.ComponentSchema {
+  collectionName: 'components_sections_research_points';
+  info: {
+    displayName: 'ResearchPoint';
+  };
+  attributes: {
+    text: Schema.Attribute.String;
+  };
+}
+
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
       'sections.about-cards': SectionsAboutCards;
       'sections.about-section': SectionsAboutSection;
       'sections.association-about': SectionsAssociationAbout;
+      'sections.association-contact': SectionsAssociationContact;
+      'sections.association-global-community': SectionsAssociationGlobalCommunity;
       'sections.association-global-impact': SectionsAssociationGlobalImpact;
+      'sections.association-leadership': SectionsAssociationLeadership;
+      'sections.association-net-zero': SectionsAssociationNetZero;
       'sections.association-our-role': SectionsAssociationOurRole;
+      'sections.association-research-education': SectionsAssociationResearchEducation;
+      'sections.association-strategic-priorities': SectionsAssociationStrategicPriorities;
       'sections.association-vision-mission': SectionsAssociationVisionMission;
       'sections.cards': SectionsCards;
+      'sections.community-point': SectionsCommunityPoint;
       'sections.events': SectionsEvents;
       'sections.events-section': SectionsEventsSection;
       'sections.hero': SectionsHero;
       'sections.hero-section': SectionsHeroSection;
       'sections.impact-point': SectionsImpactPoint;
       'sections.join-section': SectionsJoinSection;
+      'sections.leadership-point': SectionsLeadershipPoint;
       'sections.left-card': SectionsLeftCard;
       'sections.left-submit': SectionsLeftSubmit;
       'sections.left-summit': SectionsLeftSummit;
       'sections.mission-points': SectionsMissionPoints;
       'sections.news-items': SectionsNewsItems;
       'sections.news-section': SectionsNewsSection;
+      'sections.priority-point': SectionsPriorityPoint;
+      'sections.research-point': SectionsResearchPoint;
     }
   }
 }

@@ -1,0 +1,13 @@
+{
+  "collectionName": "components_sections_leadership_points",
+  "info": {
+    "displayName": "LeadershipPoint"
+  },
+  "options": {},
+  "attributes": {
+    "text": {
+      "type": "string"
+    }
+  },
+  "config": {}
+}

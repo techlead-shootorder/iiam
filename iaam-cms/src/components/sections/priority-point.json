@@ -1,0 +1,13 @@
+{
+  "collectionName": "components_sections_priority_points",
+  "info": {
+    "displayName": "PriorityPoint"
+  },
+  "options": {},
+  "attributes": {
+    "text": {
+      "type": "string"
+    }
+  },
+  "config": {}
+}

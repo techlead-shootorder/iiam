@@ -35,6 +35,36 @@
       "type": "component",
       "component": "sections.association-global-impact",
       "repeatable": false
+    },
+    "AssociationLeadership": {
+      "type": "component",
+      "component": "sections.association-leadership",
+      "repeatable": false
+    },
+    "AssociationResearchEducation": {
+      "type": "component",
+      "component": "sections.association-research-education",
+      "repeatable": false
+    },
+    "AssociationStrategicPriorities": {
+      "type": "component",
+      "component": "sections.association-strategic-priorities",
+      "repeatable": false
+    },
+    "AssociationNetZero": {
+      "type": "component",
+      "component": "sections.association-net-zero",
+      "repeatable": false
+    },
+    "AssociationGlobalCommunity": {
+      "type": "component",
+      "component": "sections.association-global-community",
+      "repeatable": false
+    },
+    "AssociationContact": {
+      "type": "component",
+      "component": "sections.association-contact",
+      "repeatable": false
     }
   }
 }
