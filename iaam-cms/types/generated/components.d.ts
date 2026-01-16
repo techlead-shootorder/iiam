@@ -1,5 +1,16 @@
 import type { Schema, Struct } from '@strapi/strapi';
 
+export interface SectionSection extends Struct.ComponentSchema {
+  collectionName: 'components_section_sections';
+  info: {
+    displayName: 'Section';
+  };
+  attributes: {
+    Description: Schema.Attribute.Blocks;
+    Title: Schema.Attribute.String;
+  };
+}
+
 export interface SectionsAboutCards extends Struct.ComponentSchema {
   collectionName: 'components_sections_about_cards';
   info: {
@@ -390,6 +401,7 @@ export interface SectionsResearchPoint extends Struct.ComponentSchema {
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
+      'section.section': SectionSection;
       'sections.about-cards': SectionsAboutCards;
       'sections.about-section': SectionsAboutSection;
       'sections.association-about': SectionsAssociationAbout;

@@ -2,24 +2,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { Calendar, ChevronRight } from "lucide-react";
 import { NewsSectionData } from "@/types/home/newsSection";
+import SectionContainer from "../common/SectionContainer";
 
 const NEXT_PUBLIC_STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL;
-
-const SectionContainer = ({
-  children,
-  className = "",
-  bgColor = "bg-white",
-}: {
-  children: React.ReactNode;
-  className?: string;
-  bgColor?: string;
-}) => (
-  <section className={`py-16 ${bgColor} ${className}`}>
-    <div className="container mx-auto px-4">
-      <div className="max-w-6xl mx-auto">{children}</div>
-    </div>
-  </section>
-);
 
 async function NewsSection() {
   try {
