@@ -3,7 +3,7 @@ const API = process.env.NEXT_PUBLIC_STRAPI_URL?.replace(/\/$/, '') || 'http://13
 export async function getAssociationData() {
   const res = await fetch(`${API}/api/top-contents?populate=*`);
   const json = await res.json();
-  return json.data[0];
+  return json.data?.[0] || null;
 }
 
 

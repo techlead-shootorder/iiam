@@ -8,6 +8,18 @@ import { getAssociationData } from "@/lib/api";
 export default async function Page() {
   const data = await getAssociationData();
 
+  if (!data) {
+    return (
+      <div className="bg-white min-h-screen">
+        <Header />
+        <div className="py-20 text-center">
+          <p className="text-gray-600">Failed to load association data</p>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
+
   return (
     <div className="bg-white min-h-screen">
       <Header />
@@ -15,7 +27,6 @@ export default async function Page() {
       <main>
         <AssociationHero data={data} />
 
-        {/* BREADCRUMB — THIS IS THE ONE YOU WANT */}
         <Breadcrumb
           items={[
             { label: "Home", href: "/" },
