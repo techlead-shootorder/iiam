@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import SectionContainer from "../common/SectionContainer";
+import { getProxiedImageUrl } from "@/lib/imageProxy";
 
 const NEXT_PUBLIC_STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL;
 
@@ -58,7 +59,7 @@ export default async function EventsSection() {
             <div className="space-y-6">
               {featured.heroImage?.url && (
                 <Image
-                  src={`${NEXT_PUBLIC_STRAPI_URL}${featured.heroImage.url.startsWith('/') ? '' : '/'}${featured.heroImage.url}`}
+                  src={getProxiedImageUrl(featured.heroImage.url)}
                   alt={featured.title}
                   width={800}
                   height={400}

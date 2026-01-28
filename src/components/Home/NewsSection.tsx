@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Calendar, ChevronRight } from "lucide-react";
 import { NewsSectionData } from "@/types/home/newsSection";
 import SectionContainer from "../common/SectionContainer";
+import { getProxiedImageUrl } from "@/lib/imageProxy";
 
 const NEXT_PUBLIC_STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL;
 
@@ -51,9 +52,7 @@ async function NewsSection() {
       ?.map((b) => b.children.map((c) => c.text).join(""))
       .join("");
 
-    const imageUrl = news.featuredImage?.url
-      ? `${NEXT_PUBLIC_STRAPI_URL}${news.featuredImage.url.startsWith('/') ? '' : '/'}${news.featuredImage.url}`
-      : "/sdsg-goals.jpg";
+    const imageUrl = getProxiedImageUrl(news.featuredImage?.url) || "/sdsg-goals.jpg";
 
     return (
       <SectionContainer bgColor="bg-[hsl(210,20%,96%)]">

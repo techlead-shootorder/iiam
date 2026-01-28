@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { HeroBannerData } from "@/types/home/heroSection";
+import { getProxiedImageUrl } from "@/lib/imageProxy";
 
 const NEXT_PUBLIC_STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL;
 
@@ -40,9 +41,9 @@ export default async function HeroSection() {
     return null;
   }
 
-  const imageUrl = heroData.HeroBanner?.formats?.large?.url
-    ? `${NEXT_PUBLIC_STRAPI_URL}${heroData.HeroBanner.formats.large.url.startsWith('/') ? '' : '/'}${heroData.HeroBanner.formats.large.url}`
-    : "/hero-conference.png";
+  const imageUrl = getProxiedImageUrl(
+    heroData.HeroBanner?.formats?.large?.url || heroData.HeroBanner?.url || null
+  ) || "/hero-conference.png";
 
   return (
     <section className="relative h-[400px] md:h-[500px]">
