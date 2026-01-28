@@ -1,38 +1,40 @@
+
 import Image from "next/image";
 import Link from "next/link";
 import { AboutSectionData } from "@/types/home/aboutSection";
-import SectionContainer from "../common/SectionContainer";
 
 const NEXT_PUBLIC_STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL;
+
+const SectionContainer = ({
+  children,
+  className = "",
+  bgColor = "bg-white",
+}: {
+  children: React.ReactNode;
+  className?: string;
+  bgColor?: string;
+}) => (
+  <section className={`py-16 ${bgColor} ${className}`}>
+    <div className="container mx-auto px-4">
+      <div className="max-w-6xl mx-auto">{children}</div>
+    </div>
+  </section>
+);
 
 async function AboutSection() {
   try {
     const res = await fetch(
       `${NEXT_PUBLIC_STRAPI_URL}/api/home-pages?populate[aboutSection][populate]=*`,
-      {
-        next: { revalidate: 60 },
-      }
+      { next: { revalidate: 60 } }
     );
 
-    let about: AboutSectionData | null = null;
-    try {
-      if (res.ok) {
-        const json = await res.json();
-        about = json.data?.[0]?.aboutSection;
-      }
-    } catch (e) {
-      console.error("Error parsing about data:", e);
-    }
+    if (!res.ok) throw new Error("Failed to fetch about section");
+
+    const json = await res.json();
+    const about: AboutSectionData = json.data?.[0]?.aboutSection;
 
     if (!about) {
-      about = {
-        title: "About Us",
-        description: [{ type: "paragraph", children: [{ type: "text", text: "Learn more about our organization." }] }],
-        image: { url: "/about-placeholder.jpg", alternativeText: "About" },
-        buttonText: "Learn More",
-        buttonLink: "/about",
-        about_cards: [],
-      };
+      return <section className="py-24 text-center">Loading...</section>;
     }
 
     const mainText = about.description
