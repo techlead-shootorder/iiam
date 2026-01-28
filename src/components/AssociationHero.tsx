@@ -1,8 +1,10 @@
+const API = process.env.NEXT_PUBLIC_STRAPI_URL?.replace(/\/$/, '') || 'http://13.53.89.25:1337';
+
 type Props = { data: any };
 
 export default function AssociationHero({ data }: Props) {
   const image = data?.BannerImage?.url
-    ? `http://127.0.0.1:1337${data.BannerImage.url}`
+    ? `${API}${data.BannerImage.url.startsWith('/') ? '' : '/'}${data.BannerImage.url}`
     : "";
 
   return (
