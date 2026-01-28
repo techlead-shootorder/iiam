@@ -92,7 +92,7 @@ export default function MembershipDropdown() {
 
       {/* Dropdown */}
       {isOpen && (
-        <div className="fixed inset-0 top-[145px] z-50 w-screen bg-white border-t border-gray-200 shadow-lg overflow-hidden">
+        <div className="fixed inset-0 top-[158px] z-50 w-screen bg-white border-t border-gray-200 shadow-lg overflow-hidden dropdown-animate">
           <div className="flex h-full">
             {/* Left Panel - Hidden on smaller screens */}
             <div className="hidden lg:block w-1/5 flex-shrink-0 border-r border-gray-100 bg-gray-50 p-6">
