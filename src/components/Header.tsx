@@ -34,7 +34,7 @@ export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   return (
-    <header className="w-full relative z-[999]">
+    <header className="w-full sticky top-0 z-[999]">
 
       {/* ===== TOP BAR ===== */}
       <div className="hidden md:block text-[hsl(197,63%,22%)] bg-gray-300 font-semibold">
