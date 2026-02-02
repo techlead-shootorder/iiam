@@ -16,7 +16,7 @@ interface Event {
 }
 
 async function getEventsPage() {
-  const baseUrl = API?.replace(/\/$/, '') || 'http://13.53.89.25:1337';
+  const baseUrl = API?.replace(/\/$/, '') || 'http://13.62.142.63';
   const res = await fetch(
     `${baseUrl}/api/event-page?populate[featuredEvent][populate]=heroImage&populate[upcomingEvents][populate]=heroImage`,
     { cache: "no-store" }

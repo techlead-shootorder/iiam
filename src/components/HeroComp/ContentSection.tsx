@@ -89,8 +89,8 @@ export default function ContentSection({ sections = [] }: any) {
               const id = s.Heading.replace(/\s+/g, "-");
 
               return (
-                <section id={id} key={i} className="scroll-mt-32">
-                  <h2 className="text-[40px] leading-[48px] font-light mb-6">
+                <section id={id} key={i} className="scroll-mt-40">
+                  <h2 className="text-[40px] leading-[48px] font-light mb-4">
                     {s.Heading}
                   </h2>
 

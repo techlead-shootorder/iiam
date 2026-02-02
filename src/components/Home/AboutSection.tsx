@@ -2,32 +2,11 @@ import LazyImage from "@/components/common/LazyImage";
 import Link from "next/link";
 import SectionContainer from "../common/SectionContainer";
 import { getProxiedImageUrl } from "@/lib/imageProxy";
+import { getAboutData } from "@/lib/api";
 
 const NEXT_PUBLIC_STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL;
 
-async function getAboutData() {
-  try {
-    const baseUrl = NEXT_PUBLIC_STRAPI_URL?.replace(/\/$/, '') || 'http://13.53.89.25:1337';
-    const strapiUrl = new URL(`${baseUrl}/api/home`);
-    strapiUrl.searchParams.append("populate[ThirdFold][populate]", "*");
 
-    const response = await fetch(strapiUrl.toString(), {
-      next: { revalidate: 60 },
-    });
-
-    if (!response.ok) {
-      const errorText = await response.text();
-      console.error("About API Error:", response.status, errorText);
-      throw new Error("Failed to fetch About data");
-    }
-
-    const json = await response.json();
-    return json?.data?.ThirdFold || null;
-  } catch (error) {
-    console.error("AboutSection fetch error:", error);
-    return null;
-  }
-}
 
 export default async function AboutSection() {
   const about = await getAboutData();

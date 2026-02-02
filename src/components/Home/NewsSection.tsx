@@ -9,7 +9,7 @@ const NEXT_PUBLIC_STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL;
 
 async function NewsSection() {
   try {
-    const baseUrl = NEXT_PUBLIC_STRAPI_URL?.replace(/\/$/, '') || 'http://13.53.89.25:1337';
+    const baseUrl = NEXT_PUBLIC_STRAPI_URL?.replace(/\/$/, '') || 'http://13.62.142.63';
     const res = await fetch(
       `${baseUrl}/api/home-pages?populate[newsSection][populate]=*`,
       {

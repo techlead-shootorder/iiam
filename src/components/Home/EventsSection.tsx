@@ -4,7 +4,7 @@ import SectionContainer from "../common/SectionContainer";
 
 const API =
   process.env.NEXT_PUBLIC_STRAPI_URL?.replace(/\/$/, "") ||
-  "http://13.53.89.25:1337";
+  "http://13.62.142.63";
 
 /* -------- Rich text renderer -------- */
 function renderRichText(blocks: any[]) {
@@ -244,7 +244,7 @@ export default async function EventsSection() {
 
 // export default async function EventsSection() {
 //   try {
-//     const baseUrl = NEXT_PUBLIC_STRAPI_URL?.replace(/\/$/, '') || 'http://13.53.89.25:1337';
+//     const baseUrl = NEXT_PUBLIC_STRAPI_URL?.replace(/\/$/, '') || 'http://13.62.142.63';
 //     const response = await fetch(
 //       `${baseUrl}/api/events?populate=*`,
 //       {

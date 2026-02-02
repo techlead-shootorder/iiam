@@ -6,7 +6,7 @@ import LazyImage from '@/components/common/LazyImage'
 
 const API =
   process.env.NEXT_PUBLIC_STRAPI_URL?.replace(/\/$/, '') ||
-  'http://13.53.89.25:1337'
+  'http://13.62.142.63'
 
 export default function MainDropdown({ section }: { section: any }) {
   const [open, setOpen] = useState(false)
