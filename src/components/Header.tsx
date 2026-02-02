@@ -26,7 +26,7 @@ export default function Header() {
     <header className="w-full sticky top-0 z-[999] bg-white">
 
       {/* ================= TOP BAR ================= */}
-      <div className="hidden md:block bg-gray-300 text-[hsl(197,63%,22%)] font-semibold text-xs">
+      <div className="hidden md:block bg-gray-300 text-[hsl(197,63%,22%)] h-8 font-semibold text-xs">
         <div className="container mx-auto px-4 py-2 flex justify-between">
 
           {/* LEFT */}
@@ -109,7 +109,7 @@ export default function Header() {
 
       {/* ================= MAIN NAV ================= */}
       <nav className="hidden md:block bg-[hsl(197,63%,22%)] text-white text-sm font-bold">
-        <div className="container mx-auto px-4 flex justify-center gap-4">
+        <div className="container mx-auto px-4 flex justify-center gap-4 h-[44px] items-center">
           {mainNav.map((section) => (
             <MainDropdown key={section.Identifier} section={section} />
           ))}
