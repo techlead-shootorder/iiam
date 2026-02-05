@@ -2,17 +2,11 @@
 
 import LazyImage from "@/components/common/LazyImage";
 import Link from "next/link";
-import {
-  FaFacebookF,
-  FaTwitter,
-  FaLinkedinIn,
-  FaYoutube,
-  FaPhone,
-  FaMapMarkerAlt,
-  FaEnvelope,
-} from "react-icons/fa";
+import { FaFacebookF, FaTwitter, FaLinkedinIn, FaYoutube } from "react-icons/fa";
 
 const API = process.env.NEXT_PUBLIC_STRAPI_URL?.replace(/\/$/, "") || "http://admin.iaamonline.org";
+
+/* ---------------- FETCH ---------------- */
 
 async function getFooterData() {
   const menuRes = await fetch(
@@ -21,7 +15,7 @@ async function getFooterData() {
   );
 
   const generalRes = await fetch(
-    `${API}/api/generals?populate[Communication]=true&populate[SocialMedia]=true&populate[Legal]=true&populate[WeChat][populate]=Image`,
+    `${API}/api/generals?populate[Communication][populate]=IconImage&populate[SocialMedia][populate]=PlatformLogo&populate[WeChat][populate]=Image&populate[Legal]=true`,
     { cache: "no-store" }
   );
 
@@ -37,6 +31,8 @@ async function getFooterData() {
   };
 }
 
+/* ---------------- COMPONENT ---------------- */
+
 export default async function Footer() {
   const { menuSections, general } = await getFooterData();
 
@@ -44,20 +40,20 @@ export default async function Footer() {
   const socialMedia = general?.SocialMedia || [];
   const legal = general?.Legal || [];
 
-  const programs =
-    menuSections.find((m: any) => m.LinkTitle === "Programs")?.Sublinks || [];
-
-  const programsMid = Math.ceil(programs.length / 2);
-  const programsLeft = programs.slice(0, programsMid);
-  const programsRight = programs.slice(programsMid);
-
   const discover =
     menuSections.find(
       (m: any) => m.LinkTitle === "Discover Advanced Materials"
     )?.Sublinks || [];
 
+  const programs =
+    menuSections.find((m: any) => m.LinkTitle === "Programs")?.Sublinks || [];
+
   const communities =
     menuSections.find((m: any) => m.LinkTitle === "Communities")?.Sublinks || [];
+
+  const mid = Math.ceil(programs.length / 2);
+  const programsLeft = programs.slice(0, mid);
+  const programsRight = programs.slice(mid);
 
   const weChatImage = general?.WeChat?.Image?.url
     ? API + general.WeChat.Image.url
@@ -97,16 +93,23 @@ export default async function Footer() {
             </h3>
 
             <div className="space-y-4 text-sm">
-              {communication.map((item: any) => (
-                <ContactRow
-                  key={item.id}
-                  label={item.Label}
-                  icon={getContactIcon(item.Label)}
-                >
-                  {item.Description}
-                </ContactRow>
-              ))}
+              {communication.map((item: any) => {
+                const iconUrl = item?.IconImage?.url
+                  ? API + item.IconImage.url
+                  : null;
 
+                return (
+                  <ContactRow
+                    key={item.id}
+                    label={item.Label}
+                    iconUrl={iconUrl}
+                  >
+                    {item.Description}
+                  </ContactRow>
+                );
+              })}
+
+              {/* WECHAT + SOCIAL */}
               <div className="flex gap-8 mt-6">
                 {weChatImage && (
                   <div>
@@ -129,13 +132,20 @@ export default async function Footer() {
                     {general?.SocialMediaTitle || "Follow Us On"}
                   </p>
                   <div className="flex gap-1">
-                    {socialMedia.map((s: any) => (
-                      <SocialIcon
-                        key={s.id}
-                        platform={s.PlatformName}
-                        href={s.PlatformNameLink}
-                      />
-                    ))}
+                    {socialMedia.map((s: any) => {
+                      const logo = s?.PlatformLogo?.url
+                        ? API + s.PlatformLogo.url
+                        : null;
+
+                      return (
+                        <SocialIcon
+                          key={s.id}
+                          platform={s.PlatformName}
+                          href={s.PlatformNameLink}
+                          logo={logo}
+                        />
+                      );
+                    })}
                   </div>
                 </div>
               </div>
@@ -186,10 +196,27 @@ function FooterColumn({ title, links }: { title: string; links: any[] }) {
   );
 }
 
-function ContactRow({ label, children, icon: Icon }: any) {
+function ContactRow({
+  label,
+  children,
+  iconUrl,
+}: {
+  label: string;
+  children: React.ReactNode;
+  iconUrl?: string | null;
+}) {
   return (
     <div className="flex items-start gap-3">
-      {Icon && <Icon className="text-[hsl(197,63%,22%)] h-10 w-4 shrink-0" />}
+      {iconUrl && (
+        <div className="w-4 h-4 relative mt-1 shrink-0">
+          <LazyImage
+            src={iconUrl}
+            alt={label}
+            fill
+            className="object-contain"
+          />
+        </div>
+      )}
       <div>
         <p className="text-gray-500">{label}</p>
         <p className="text-[hsl(210,20%,20%)]">{children}</p>
@@ -198,8 +225,16 @@ function ContactRow({ label, children, icon: Icon }: any) {
   );
 }
 
-function SocialIcon({ platform, href }: any) {
-  const Icon =
+function SocialIcon({
+  platform,
+  href,
+  logo,
+}: {
+  platform: string;
+  href?: string;
+  logo?: string | null;
+}) {
+  const FallbackIcon =
     platform === "Facebook"
       ? FaFacebookF
       : platform === "Twitter"
@@ -212,17 +247,320 @@ function SocialIcon({ platform, href }: any) {
     <Link
       href={href || "#"}
       className="w-6 h-6 flex items-center justify-center border border-gray-300 rounded-full hover:bg-gray-100 transition-colors"
+      aria-label={platform}
     >
-      <Icon className="text-gray-600" />
+      {logo ? (
+        <LazyImage
+          src={logo}
+          alt={platform}
+          width={14}
+          height={14}
+          className="object-contain"
+        />
+      ) : (
+        <FallbackIcon className="text-gray-600" />
+      )}
     </Link>
   );
 }
 
-function getContactIcon(label: string) {
-  if (label.toLowerCase().includes("address")) return FaMapMarkerAlt;
-  if (label.toLowerCase().includes("phone")) return FaPhone;
-  if (label.toLowerCase().includes("email")) return FaEnvelope;
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// 'use server';
+
+// import LazyImage from "@/components/common/LazyImage";
+// import Link from "next/link";
+// import {
+//   FaFacebookF,
+//   FaTwitter,
+//   FaLinkedinIn,
+//   FaYoutube,
+//   FaPhone,
+//   FaMapMarkerAlt,
+//   FaEnvelope,
+// } from "react-icons/fa";
+
+// const API = process.env.NEXT_PUBLIC_STRAPI_URL?.replace(/\/$/, "") || "http://admin.iaamonline.org";
+
+// async function getFooterData() {
+//   const menuRes = await fetch(
+//     `${API}/api/menu-sections?filters[MenuPlacement][$eq]=Footer&populate[Links][populate]=Sublinks`,
+//     { cache: "no-store" }
+//   );
+
+//   const generalRes = await fetch(
+//     `${API}/api/generals?populate[Communication]=true&populate[SocialMedia]=true&populate[Legal]=true&populate[WeChat][populate]=Image`,
+//     { cache: "no-store" }
+//   );
+
+//   if (!menuRes.ok) throw new Error("Footer menu fetch failed");
+//   if (!generalRes.ok) throw new Error("Footer general fetch failed");
+
+//   const menuJson = await menuRes.json();
+//   const generalJson = await generalRes.json();
+
+//   return {
+//     menuSections: menuJson?.data?.[0]?.Links || [],
+//     general: generalJson?.data?.[0] || null,
+//   };
+// }
+
+// export default async function Footer() {
+//   const { menuSections, general } = await getFooterData();
+
+//   const communication = general?.Communication || [];
+//   const socialMedia = general?.SocialMedia || [];
+//   const legal = general?.Legal || [];
+
+//   const programs =
+//     menuSections.find((m: any) => m.LinkTitle === "Programs")?.Sublinks || [];
+
+//   const programsMid = Math.ceil(programs.length / 2);
+//   const programsLeft = programs.slice(0, programsMid);
+//   const programsRight = programs.slice(programsMid);
+
+//   const discover =
+//     menuSections.find(
+//       (m: any) => m.LinkTitle === "Discover Advanced Materials"
+//     )?.Sublinks || [];
+
+//   const communities =
+//     menuSections.find((m: any) => m.LinkTitle === "Communities")?.Sublinks || [];
+
+//   const weChatImage = general?.WeChat?.Image?.url
+//     ? API + general.WeChat.Image.url
+//     : null;
+
+//   return (
+//     <footer className="bg-white text-[hsl(210,24%,46%)] py-12 md:py-16 border-t border-[hsl(210,20%,88%)]">
+//       <div className="container mx-auto px-4">
+//         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 mb-12">
+
+//           {/* Discover */}
+//           <FooterColumn title="Discover Advanced Materials" links={discover} />
+
+//           {/* Programs */}
+//           <FooterColumn title="Programs" links={programsLeft} />
+
+//           {/* Programs Continued */}
+//           <div className="sm:mt-8 lg:mt-10">
+//             <ul className="space-y-2">
+//               {programsRight.map((l: any) => (
+//                 <li key={l.id}>
+//                   <Link href={l.LinkURL || "#"} className="footer-link">
+//                     {l.LinkTitle}
+//                   </Link>
+//                 </li>
+//               ))}
+//             </ul>
+//           </div>
+
+//           {/* Communities */}
+//           <FooterColumn title="Communities" links={communities} />
+
+//           {/* Contact */}
+//           <div>
+//             <h3 className="font-bold text-[hsl(210,20%,20%)] mb-4">
+//               {general?.CommunicationTitle || "Contact Info"}
+//             </h3>
+
+//             <div className="space-y-4 text-sm">
+//               {communication.map((item: any) => (
+//                 <ContactRow
+//                   key={item.id}
+//                   label={item.Label}
+//                   icon={getContactIcon(item.Label)}
+//                 >
+//                   {item.Description}
+//                 </ContactRow>
+//               ))}
+
+//               <div className="flex gap-8 mt-6">
+//                 {weChatImage && (
+//                   <div>
+//                     <p className="font-bold mb-2 text-black">
+//                       {general?.WeChat?.Title}
+//                     </p>
+//                     <div className="w-16 h-16 relative">
+//                       <LazyImage
+//                         src={weChatImage}
+//                         alt="WeChat QR"
+//                         fill
+//                         className="object-contain"
+//                       />
+//                     </div>
+//                   </div>
+//                 )}
+
+//                 <div>
+//                   <p className="font-bold mb-2 text-black">
+//                     {general?.SocialMediaTitle || "Follow Us On"}
+//                   </p>
+//                   <div className="flex gap-1">
+//                     {socialMedia.map((s: any) => (
+//                       <SocialIcon
+//                         key={s.id}
+//                         platform={s.PlatformName}
+//                         href={s.PlatformNameLink}
+//                       />
+//                     ))}
+//                   </div>
+//                 </div>
+//               </div>
+//             </div>
+//           </div>
+//         </div>
+
+//         {/* Bottom */}
+//         <div className="border-t border-[hsl(210,20%,88%)] pt-6 text-center text-sm text-[hsl(211,37%,34%)]">
+//           <div className="flex flex-wrap justify-center gap-2">
+//             {legal.map((l: any, i: number) => (
+//               <span key={l.id} className="flex items-center gap-2">
+//                 {l.LabelLink ? (
+//                   <Link href={l.LabelLink} className="underline">
+//                     {l.Label}
+//                   </Link>
+//                 ) : (
+//                   <span>{l.Label}</span>
+//                 )}
+//                 {i !== legal.length - 1 && <span>|</span>}
+//               </span>
+//             ))}
+//           </div>
+//         </div>
+//       </div>
+//     </footer>
+//   );
+// }
+
+// /* ---------------- SMALL COMPONENTS ---------------- */
+
+// function FooterColumn({ title, links }: { title: string; links: any[] }) {
+//   if (!links.length) return null;
+
+//   return (
+//     <div>
+//       <h3 className="font-bold text-[hsl(210,20%,20%)] mb-4">{title}</h3>
+//       <ul className="space-y-2">
+//         {links.map((l) => (
+//           <li key={l.id}>
+//             <Link href={l.LinkURL || "#"} className="footer-link">
+//               {l.LinkTitle}
+//             </Link>
+//           </li>
+//         ))}
+//       </ul>
+//     </div>
+//   );
+// }
+
+// function ContactRow({ label, children, icon: Icon }: any) {
+//   return (
+//     <div className="flex items-start gap-3">
+//       {Icon && <Icon className="text-[hsl(197,63%,22%)] h-10 w-4 shrink-0" />}
+//       <div>
+//         <p className="text-gray-500">{label}</p>
+//         <p className="text-[hsl(210,20%,20%)]">{children}</p>
+//       </div>
+//     </div>
+//   );
+// }
+
+// function SocialIcon({ platform, href }: any) {
+//   const Icon =
+//     platform === "Facebook"
+//       ? FaFacebookF
+//       : platform === "Twitter"
+//       ? FaTwitter
+//       : platform === "Linkedin"
+//       ? FaLinkedinIn
+//       : FaYoutube;
+
+//   return (
+//     <Link
+//       href={href || "#"}
+//       className="w-6 h-6 flex items-center justify-center border border-gray-300 rounded-full hover:bg-gray-100 transition-colors"
+//     >
+//       <Icon className="text-gray-600" />
+//     </Link>
+//   );
+// }
+
+// function getContactIcon(label: string) {
+//   if (label.toLowerCase().includes("address")) return FaMapMarkerAlt;
+//   if (label.toLowerCase().includes("phone")) return FaPhone;
+//   if (label.toLowerCase().includes("email")) return FaEnvelope;
+// }
 
 
 
