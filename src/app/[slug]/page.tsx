@@ -1,5 +1,4 @@
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
+// import Footer from "@/components/Footer";
 import { notFound } from "next/navigation";
 
 import HomeHero from "@/components/Home/HeroSection";
@@ -11,6 +10,7 @@ import BlogSection from "@/components/Home/BlogSection";
 import HeroSection from "@/components/HeroComp/HeroSection";
 import ContentSection from "@/components/HeroComp/ContentSection";
 import Breadcrumb from "@/components/Breadcrumb";
+import FooterNew from "@/components/FooterNew";
 
 import { getTopContentBySlug } from "@/lib/api";
 
@@ -28,7 +28,6 @@ export default async function Page({
   if (slug === "home" || slug === "") {
     return (
       <div className="min-h-screen bg-white">
-        <Header />
         <main>
           <HomeHero />
           <HomeAbout />
@@ -36,7 +35,8 @@ export default async function Page({
           <EventsSection />
           <BlogSection />
         </main>
-        <Footer />
+        {/* <Footer /> */}
+        <FooterNew />
       </div>
     );
   }
@@ -47,7 +47,6 @@ export default async function Page({
 
   return (
     <div className="bg-white min-h-screen">
-      <Header />
 
       <div className="relative">
         <HeroSection data={data} />
@@ -64,7 +63,8 @@ export default async function Page({
         <ContentSection sections={data.Section} />
       </div>
 
-      <Footer />
+      {/* <Footer /> */}
+      <FooterNew />
     </div>
   );
 }

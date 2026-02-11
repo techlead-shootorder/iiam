@@ -1,4 +1,3 @@
-import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import LazyImage from "@/components/common/LazyImage";
 import Link from "next/link";
@@ -43,7 +42,6 @@ export default async function EventsPage() {
 
   return (
     <div className="bg-white min-h-screen">
-      <Header />
 
       {/* ---------------- HERO ---------------- */}
       <div className="relative bg-[hsl(197,63%,22%)]">
