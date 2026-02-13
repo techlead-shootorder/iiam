@@ -34,59 +34,119 @@ export default function Header({ onMobileMenuToggle, mobileMenuOpen = false }: H
   const toggleMenu = onMobileMenuToggle ? onMobileMenuToggle : () => setLocalMobileMenuOpen(!localMobileMenuOpen);
 
   return (
+    // <header className="w-full bg-white border-b border-border">
+    //   <div className="max-w-[1440px] mx-auto px-[30px] flex items-center justify-between">
+    //     {/* Logo & Title */}
+    //     <div className="flex items-center gap-4 flex-1 min-w-0">
+    //       <div className="w-[140px] h-[140px] rounded-lg flex items-center justify-center flex-shrink-0">
+    //         <Image
+    //           src={headerData.logo?.url || "1704818354IAAM-Logo-SVG 1.svg"}
+    //           alt="IAAM Logo"
+    //           width={120}
+    //           height={120}
+    //           className="w-[120px] h-[120px] object-contain"
+    //         />
+    //       </div>
+    //       <div className="min-w-0">
+    //         <h1 className="font-montserrat font-bold text-[20px] lg:text-[28px] xl:text-[32px] text-iaam-primary leading-tight">
+    //           {/* {headerData.title} */}
+    //           International Association <br />of Advanced Materials
+    //           <span className="text-[20px] lg:text-[24px] xl:text-[28px]">®</span>
+    //         </h1>
+    //         <p className="font-roboto font-semibold text-[14px] lg:text-[18px] text-iaam-text-body mt-1 hidden sm:block">
+    //           {headerData.tagline}
+    //         </p>
+    //       </div>
+    //     </div>
+
+    //     {/* Right side: Web Talks + Search */}
+    //     <div className="hidden lg:flex items-center gap-4 flex-shrink-0 ml-4">
+    //       <a
+    //         href={headerData.webTalksLink || "#"}
+    //         className="font-roboto font-medium text-[16px] text-iaam-primary border border-iaam-primary px-5 py-1.5 rounded hover:bg-iaam-primary hover:text-white transition-colors"
+    //       >
+    //         Web Talks
+    //       </a>
+    //       <div className="relative">
+    //         <input
+    //           type="text"
+    //           placeholder="Search..."
+    //           className="font-roboto text-[14px] border border-border rounded px-3 py-2 pr-9 w-[200px] focus:outline-none focus:ring-1 focus:ring-iaam-primary"
+    //         />
+    //         <Search className="absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground" size={18} />
+    //       </div>
+    //     </div>
+
+    //     {/* Mobile menu button */}
+    //     <button
+    //       className="lg:hidden ml-4 p-2"
+    //       onClick={toggleMenu}
+    //       aria-label="Toggle menu"
+    //     >
+    //       {menuOpen ? <X size={28} /> : <Menu size={28} />}
+    //     </button>
+    //   </div>
+    // </header>
     <header className="w-full bg-white border-b border-border">
-      <div className="max-w-[1440px] mx-auto px-[30px] flex items-center justify-between">
-        {/* Logo & Title */}
-        <div className="flex items-center gap-4 flex-1 min-w-0">
-          <div className="w-[140px] h-[140px] rounded-lg flex items-center justify-center flex-shrink-0">
-            <Image
-              src={headerData.logo?.url || "1704818354IAAM-Logo-SVG 1.svg"}
-              alt="IAAM Logo"
-              width={120}
-              height={120}
-              className="w-[120px] h-[120px] object-contain"
-            />
-          </div>
-          <div className="min-w-0">
-            <h1 className="font-montserrat font-bold text-[20px] lg:text-[28px] xl:text-[32px] text-iaam-primary leading-tight">
-              {/* {headerData.title} */}
-              International Association <br />of Advanced Materials
-              <span className="text-[20px] lg:text-[24px] xl:text-[28px]">®</span>
-            </h1>
-            <p className="font-roboto font-semibold text-[14px] lg:text-[18px] text-iaam-text-body mt-1 hidden sm:block">
-              {headerData.tagline}
-            </p>
-          </div>
+  <div className="max-w-[1440px] mx-auto px-4 lg:px-[30px]">
+    <div className="flex items-center justify-between py-4">
+
+      {/* LEFT - Logo + Title */}
+      <div className="flex items-center gap-3 sm:gap-4 flex-1 min-w-0">
+        
+        <div className="w-[80px] sm:w-[110px] lg:w-[140px] flex-shrink-0">
+          <Image
+            src={headerData.logo?.url || "1704818354IAAM-Logo-SVG 1.svg"}
+            alt="IAAM Logo"
+            width={120}
+            height={120}
+            className="w-full h-auto object-contain"
+          />
         </div>
 
-        {/* Right side: Web Talks + Search */}
-        <div className="hidden lg:flex items-center gap-4 flex-shrink-0 ml-4">
-          <a
-            href={headerData.webTalksLink || "#"}
-            className="font-roboto font-medium text-[16px] text-iaam-primary border border-iaam-primary px-5 py-1.5 rounded hover:bg-iaam-primary hover:text-white transition-colors"
-          >
-            Web Talks
-          </a>
-          <div className="relative">
-            <input
-              type="text"
-              placeholder="Search..."
-              className="font-roboto text-[14px] border border-border rounded px-3 py-2 pr-9 w-[200px] focus:outline-none focus:ring-1 focus:ring-iaam-primary"
-            />
-            <Search className="absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground" size={18} />
-          </div>
-        </div>
+        <div className="min-w-0">
+          <h1 className="font-bold text-[16px] sm:text-[20px] lg:text-[26px] xl:text-[30px] text-iaam-primary leading-tight">
+            International Association <br className="hidden sm:block" />
+            of Advanced Materials
+          </h1>
 
-        {/* Mobile menu button */}
-        <button
-          className="lg:hidden ml-4 p-2"
-          onClick={toggleMenu}
-          aria-label="Toggle menu"
-        >
-          {menuOpen ? <X size={28} /> : <Menu size={28} />}
-        </button>
+          <p className="hidden md:block text-[13px] lg:text-[16px] text-iaam-text-body mt-1">
+            {headerData.tagline}
+          </p>
+        </div>
       </div>
-    </header>
+
+      {/* RIGHT SIDE */}
+      <div className="hidden lg:flex items-center gap-4 ml-4">
+
+        <a
+          href="#"
+          className="border border-iaam-primary text-iaam-primary px-4 py-1.5 rounded hover:bg-iaam-primary hover:text-white transition"
+        >
+          Web Talks
+        </a>
+
+        <div className="relative">
+          <input
+            type="text"
+            placeholder="Search..."
+            className="w-[180px] xl:w-[220px] border border-border rounded px-3 py-2 pr-9 text-sm focus:outline-none focus:ring-1 focus:ring-iaam-primary"
+          />
+        </div>
+      </div>
+
+      {/* MOBILE MENU BUTTON */}
+      <button
+        className="lg:hidden p-2 ml-3"
+        onClick={toggleMenu}
+      >
+        {menuOpen ? <X size={26} /> : <Menu size={26} />}
+      </button>
+
+    </div>
+  </div>
+</header>
+
   );
 }
 

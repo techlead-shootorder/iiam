@@ -3,6 +3,7 @@
 import { useState, useRef } from "react";
 import { ChevronDown } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import { dropdownData, DropdownDataItem } from "@/lib/dropdownData";
 
 interface MainNavProps {
@@ -17,8 +18,8 @@ export default function MainNav({ mobileMenuOpen }: MainNavProps) {
     "Membership",
     "Meetings & Events",
     "Innovation & Sustainability",
-    "Journals & Proceedings",
     "Awards & Recognitions",
+    "Journals & Proceedings",
     "Discover IAAM",
   ];
 
@@ -75,7 +76,7 @@ export default function MainNav({ mobileMenuOpen }: MainNavProps) {
                   </button>
                   {activeDropdown === index && (
                     <div
-                      className="fixed left-0 right-0 top-[220px] w-full bg-white z-50 border-b border-border max-h-[calc(100vh-220px)] overflow-y-auto shadow-sm"
+                      className="fixed left-0 right-0 top-[235px] w-full bg-white z-50 border-b border-border max-h-[calc(100vh-220px)] overflow-y-auto shadow-sm"
                       onMouseEnter={() => {
                         // Dropdown pe hover karne se timeout cancel ho jayega
                         if (timeoutRef.current) {
@@ -95,27 +96,12 @@ export default function MainNav({ mobileMenuOpen }: MainNavProps) {
             })}
           </ul>
         </div>
-
-        {/* ================= MOBILE NAV ================= */}
-        {mobileMenuOpen && (
-          <nav className="lg:hidden bg-white border-b border-border">
-            <div className="px-4 py-2 space-y-1">
-              {navItems.map((item, index) => (
-                <MobileNavItem
-                  key={item}
-                  title={item}
-                  data={dropdownData[index]}
-                />
-              ))}
-            </div>
-          </nav>
-        )}
       </nav>
 
       {/* ================= MOBILE NAV ================= */}
       {mobileMenuOpen && (
         <nav className="lg:hidden bg-white border-b border-border">
-          <div className="px-4 py-2 space-y-1">
+          <div className="px-4 py-2 space-y-1 max-h-[calc(100vh-120px)] overflow-y-auto">
             {navItems.map((item, index) => (
               <MobileNavItem
                 key={item}
@@ -161,9 +147,12 @@ const DropdownContent = ({ data }: { data: DropdownDataItem }) => {
             </p>
           </div>
 
-          <button className="w-full py-[10px] px-[8px] bg-iaam-primary text-white font-medium text-[18px] rounded-[3px] shadow-md hover:brightness-110 transition">
+          <Link
+            href={data.card.ctaUrl}
+            className="w-full py-[10px] px-[8px] bg-iaam-primary text-white font-medium text-[18px] rounded-[3px] shadow-md hover:brightness-110 transition text-center"
+          >
             {data.card.cta}
-          </button>
+          </Link>
         </div>
       </div>
 
@@ -181,22 +170,34 @@ const DropdownContent = ({ data }: { data: DropdownDataItem }) => {
 
         {(data.outlineCta || data.rightLinks) && (
           <div className="flex justify-between items-start w-full">
-            {data.outlineCta && (
-              <button className="py-[16px] px-[8px] border border-iaam-primary text-iaam-primary font-medium text-[16px] rounded-[3px] hover:bg-iaam-primary hover:text-white transition">
+            {data.outlineCta && data.outlineCtaUrl && (
+              <Link
+                href={data.outlineCtaUrl}
+                className="py-[16px] px-[8px] border border-iaam-primary text-iaam-primary font-medium text-[16px] rounded-[3px] hover:bg-iaam-primary hover:text-white transition"
+              >
                 {data.outlineCta}
-              </button>
+              </Link>
             )}
 
             {data.rightLinks && (
               <div className="flex flex-col gap-4 text-right">
-                {data.rightLinks.map((rl) => (
-                  <a
-                    key={rl.header}
-                    href="#"
-                    className="font-bold text-[18px] text-iaam-primary hover:underline"
-                  >
-                    {rl.header}
-                  </a>
+                {data.rightLinks.map((rl, idx) => (
+                  rl.headerUrl ? (
+                    <Link
+                      key={idx}
+                      href={rl.headerUrl}
+                      className="font-bold text-[18px] text-iaam-primary hover:underline"
+                    >
+                      {rl.header}
+                    </Link>
+                  ) : (
+                    <span
+                      key={idx}
+                      className="font-bold text-[18px] text-iaam-primary"
+                    >
+                      {rl.header}
+                    </span>
+                  )
                 ))}
               </div>
             )}
@@ -216,20 +217,29 @@ const DropdownContent = ({ data }: { data: DropdownDataItem }) => {
             <div key={colIdx} className="flex flex-col gap-7 flex-1 min-w-0">
               {column.map((section, secIdx) => (
                 <div key={secIdx} className="flex flex-col gap-3">
-                  <h4 className="font-bold text-[18px] text-iaam-section-header">
-                    {section.header}
-                  </h4>
+                  {section.headerUrl ? (
+                    <Link
+                      href={section.headerUrl}
+                      className="font-bold text-[18px] text-iaam-section-header hover:text-iaam-primary transition-colors"
+                    >
+                      {section.header}
+                    </Link>
+                  ) : (
+                    <h4 className="font-bold text-[18px] text-iaam-section-header">
+                      {section.header}
+                    </h4>
+                  )}
 
                   {section.links && (
                     <div className="flex flex-col gap-4">
                       {section.links.map((link, linkIdx) => (
-                        <a
+                        <Link
                           key={linkIdx}
-                          href="#"
+                          href={link.url}
                           className="text-[16px] text-[#1e40af]/70 hover:underline hover:text-iaam-primary transition-colors"
                         >
-                          {link}
-                        </a>
+                          {link.text}
+                        </Link>
                       ))}
                     </div>
                   )}
@@ -274,24 +284,75 @@ const MobileNavItem = ({
             {data.description}
           </p>
 
+          {/* Mobile Card CTA */}
+          <Link
+            href={data.card.ctaUrl}
+            className="block w-full py-[10px] px-[8px] bg-iaam-primary text-white font-medium text-[16px] rounded-[3px] shadow-md hover:brightness-110 transition text-center"
+          >
+            {data.card.cta}
+          </Link>
+
+          {/* Mobile Outline CTA */}
+          {data.outlineCta && data.outlineCtaUrl && (
+            <Link
+              href={data.outlineCtaUrl}
+              className="block w-full py-[10px] px-[8px] border border-iaam-primary text-iaam-primary font-medium text-[14px] rounded-[3px] hover:bg-iaam-primary hover:text-white transition text-center"
+            >
+              {data.outlineCta}
+            </Link>
+          )}
+
+          {/* Mobile Right Links */}
+          {data.rightLinks && (
+            <div className="space-y-2">
+              {data.rightLinks.map((rl, idx) => (
+                rl.headerUrl ? (
+                  <Link
+                    key={idx}
+                    href={rl.headerUrl}
+                    className="block font-bold text-[14px] text-iaam-primary hover:underline"
+                  >
+                    {rl.header}
+                  </Link>
+                ) : (
+                  <span
+                    key={idx}
+                    className="block font-bold text-[14px] text-iaam-primary"
+                  >
+                    {rl.header}
+                  </span>
+                )
+              ))}
+            </div>
+          )}
+
           {data.columns.map((column, colIdx) => (
             <div key={colIdx} className="space-y-3">
               {column.map((section, secIdx) => (
                 <div key={secIdx}>
-                  <h5 className="font-bold text-[14px] text-iaam-section-header">
-                    {section.header}
-                  </h5>
+                  {section.headerUrl ? (
+                    <Link
+                      href={section.headerUrl}
+                      className="font-bold text-[14px] text-iaam-section-header hover:text-iaam-primary transition-colors"
+                    >
+                      {section.header}
+                    </Link>
+                  ) : (
+                    <h5 className="font-bold text-[14px] text-iaam-section-header">
+                      {section.header}
+                    </h5>
+                  )}
 
                   {section.links && (
                     <div className="ml-2 mt-1 space-y-1">
                       {section.links.map((link, i) => (
-                        <a
+                        <Link
                           key={i}
-                          href="#"
+                          href={link.url}
                           className="block text-[13px] text-iaam-link-light hover:underline"
                         >
-                          {link}
-                        </a>
+                          {link.text}
+                        </Link>
                       ))}
                     </div>
                   )}
