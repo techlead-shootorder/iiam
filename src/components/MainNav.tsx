@@ -226,7 +226,7 @@ const DropdownContent = ({ data }: { data: DropdownDataItem }) => {
                         <a
                           key={linkIdx}
                           href="#"
-                          className="text-[16px] text-iaam-link-light hover:underline hover:text-iaam-primary transition-colors"
+                          className="text-[16px] text-[#1e40af]/70 hover:underline hover:text-iaam-primary transition-colors"
                         >
                           {link}
                         </a>

@@ -68,7 +68,7 @@ export default async function AboutSection() {
           </Link>
         </div>
 
-        <div className="order-first md:order-last relative h-[550px] w-full">
+        <div className="order-first md:order-last relative h-[516px] w-full">
           <img
             src={imageUrl}
             alt={about.Image?.alternativeText || "About Image"}
