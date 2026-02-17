@@ -31,7 +31,7 @@ export default function HeroSection({ data }: Props) {
       {/* ===== CONTENT ===== */}
       <div className="relative z-30 max-w-7xl mx-auto px-6 h-full flex flex-col justify-center text-white">
         {/* Page Title */}
-        <span className="text-sm uppercase tracking-wider text-iaam-primary mb-3">
+        <span className="text-sm uppercase tracking-wider text-white mb-3">
           {data?.PageTitle}
         </span>
 

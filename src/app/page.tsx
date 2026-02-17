@@ -10,7 +10,7 @@ import HomeHero from '@/components/Home/HeroSection';
 
 export default function RootPage() {
   return (
-    <div className="min-h-screen flex flex-col bg-white">
+    <div className="min-h-screen flex flex-col bg-home-page">
       <main className="flex-1">
         {/* Hero Banner from src copy */}
         {/* <HeroBanner /> */}

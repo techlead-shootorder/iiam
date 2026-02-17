@@ -91,6 +91,10 @@ body {
   color: var(--iaam-link-light);
 }
 
+.bg-home-page {
+  background-color: #1e40af;
+}
+
 /* Border styles */
 .border-border {
   border-color: var(--border);

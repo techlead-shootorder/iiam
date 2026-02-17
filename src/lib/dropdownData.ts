@@ -42,7 +42,7 @@ export const dropdownData: DropdownDataItem[] = [
             { text: "Who Can Join IAAM", url: "/who-can-join-iaam" },
             { text: "Join As a Professional", url: "/join-as-a-professional" },
             { text: "Join As a Student", url: "/join-as-a-student" },
-            { text: "Student & Emerging Talent Programs", url: "/student-and-emerging-talent-programs" },
+            { text: "Student & Emerging Talent Programs", url: "/student-and-@emerging-talent-programs" },
             { text: "Membership Regulations", url: "/membership-regulations" },
             { text: "IAAM Code Of Conduct", url: "/iaam-code-of-conduct" },
             { text: "Developing Countries Engagement", url: "/developing-countries-engagement" },

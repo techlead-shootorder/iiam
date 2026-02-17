@@ -27,7 +27,7 @@ export default function NewsSection() {
 
           <Link
             href="#"
-            className="inline-block bg-[hsl(197,63%,22%)] text-white px-5 py-2 text-sm font-semibold rounded hover:bg-[hsl(197,63%,15%)] transition-colors"
+            className="inline-block bg-[#1e40af] text-white px-5 py-2 text-sm font-semibold rounded hover:bg-[#152f8c] transition-colors"
           >
             Sign Up for Newsletters
           </Link>
@@ -46,7 +46,7 @@ export default function NewsSection() {
               className="w-full h-48 object-cover"
             />
 
-            <div className="bg-[hsl(197,63%,22%)] p-6 text-white">
+            <div className="bg-[#1e40af] p-6 text-white">
               <h3 className="font-sans text-xl md:text-2xl font-bold mb-4">
                 Materials Innovation for Sustainability
               </h3>

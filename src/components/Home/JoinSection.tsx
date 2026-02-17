@@ -72,7 +72,7 @@ export default async function JoinSection() {
 
         {/* ========== LEFT BIG CARD (FirstCard) ========== */}
         <div className="lg:col-span-4">
-          <div className="h-full bg-[hsl(197,63%,22%)] text-white p-4 flex flex-col justify-between rounded-sm">
+          <div className="h-full bg-[#1e40af] text-white p-4 flex flex-col justify-between rounded-sm">
             <div>
               <h3 className="text-3xl font-bold mb-4">
                 {FirstCard?.Cardtitle}
@@ -111,7 +111,7 @@ export default async function JoinSection() {
                 key={card.id}
                 className={`p-6 rounded-sm ${
                   isDark
-                    ? "bg-[hsl(197,63%,22%)] text-white"
+                    ? "bg-[#1e40af] text-white"
                     : "bg-[hsl(197,30%,95%)]"
                 }`}
               >
@@ -119,7 +119,7 @@ export default async function JoinSection() {
                   className={`font-bold mb-3 ${
                     isDark
                       ? "text-white"
-                      : "text-[hsl(197,63%,22%)]"
+                      : "text-[#1e40af]"
                   }`}
                 >
                   {card.Heading}

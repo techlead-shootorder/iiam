@@ -124,7 +124,7 @@ function renderEventsContent(info: any, imageUrl: string) {
               />
             )}
 
-            <h3 className="font-sans text-2xl md:text-3xl font-bold text-[hsl(197,63%,22%)]">
+            <h3 className="font-sans text-2xl md:text-3xl font-bold text-[#1e40af]">
               {info.Title}
             </h3>
 
@@ -135,7 +135,7 @@ function renderEventsContent(info: any, imageUrl: string) {
           <div className="flex justify-center mt-8">
             <Link
               href="#"
-              className="inline-block text-center bg-[hsl(197,63%,22%)] text-white px-6 py-3 font-semibold rounded hover:bg-[hsl(197,63%,18%)] transition-colors"
+              className="inline-block text-center bg-[#1e40af] text-white px-6 py-3 font-semibold rounded hover:bg-[#1e40af] transition-colors"
             >
               {info.ButtonLabel}
             </Link>
@@ -145,31 +145,31 @@ function renderEventsContent(info: any, imageUrl: string) {
         {/* ================= RIGHT ================= */}
         <div className="flex flex-col justify-between h-full">
           {/* TABLE */}
-          <div className="bg-white border-2 border-[hsl(197,63%,22%)] rounded-sm overflow-hidden shadow-md">
-            <div className="text-center py-2 border-b-2 border-[hsl(197,63%,22%)] bg-[hsl(197,63%,95%)]">
-              <h3 className="font-sans text-xl md:text-2xl font-bold text-[hsl(197,63%,22%)]">
+          <div className="bg-white border-2 border-[#1e40af] rounded-sm overflow-hidden shadow-md">
+            <div className="text-center py-2 border-b-2 border-[#1e40af]">
+              <h3 className="font-sans text-xl md:text-2xl font-bold text-[#1e40af]">
                 Advanced Materials Congress
               </h3>
-              <p className="text-sm md:text-base text-[hsl(197,63%,40%)] mt-1">
+              <p className="text-sm md:text-base text-[#1e40af] mt-1">
                 Assemblies
               </p>
             </div>
 
-            <div className="divide-y-2 divide-[hsl(197,63%,22%)]">
+            <div className="divide-y-2 divide-[#1e40af]">
               {events.map((event, index) => (
                 <div key={index} className="flex">
-                  <div className="w-16 md:w-24 shrink-0 border-r-2 border-[hsl(197,63%,22%)] flex flex-col items-center justify-center py-2 bg-[hsl(197,63%,98%)]">
-                    <span className="text-xs uppercase tracking-wider text-[hsl(197,63%,40%)]">
+                  <div className="w-16 md:w-24 shrink-0 border-r-2 border-[#1e40af] flex flex-col items-center justify-center py-2">
+                    <span className="text-xs uppercase tracking-wider text-[#1e40af]">
                       {event.month}
                     </span>
-                    <span className="text-2xl md:text-3xl font-bold text-[hsl(197,63%,22%)] mt-1">
+                    <span className="text-2xl md:text-3xl font-bold text-[#1e40af] mt-1">
                       {event.day}
                     </span>
                   </div>
 
                   <div className="p-2 md:p-3">
-                    <p className="text-[13px] md:text-[15px] text-[hsl(210,20%,20%)] leading-relaxed">
-                      <span className="font-bold text-[hsl(197,63%,22%)]">
+                    <p className="text-[13px] md:text-[15px] text-gray-700 leading-relaxed">
+                      <span className="font-bold text-gray-900">
                         {event.title}
                       </span>
                       {event.description}
@@ -184,7 +184,7 @@ function renderEventsContent(info: any, imageUrl: string) {
           <div className="flex justify-center mt-8">
             <Link
               href="#"
-              className="inline-block text-center bg-[hsl(197,63%,22%)] text-white px-6 py-3 font-semibold rounded hover:bg-[hsl(197,63%,18%)] transition-colors"
+              className="inline-block text-center bg-[#1e40af] text-white px-6 py-3 font-semibold rounded hover:bg-[#152f8c] transition-colors"
             >
               Visit Congress Website
             </Link>

@@ -62,7 +62,7 @@ export default async function AboutSection() {
 
           <Link
             href="#"
-            className="block text-center bg-[hsl(197,63%,22%)] text-white px-6 py-3 font-semibold rounded hover:bg-[hsl(197,63%,15%)] transition"
+            className="block text-center bg-[#1e40af] text-white px-6 py-3 font-semibold rounded hover:bg-[#152f8c] transition"
           >
             Learn More
           </Link>

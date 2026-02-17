@@ -15,40 +15,29 @@ export default function MainNav({ mobileMenuOpen }: MainNavProps) {
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const navItems = [
-    "Membership",
-    "Meetings & Events",
-    "Innovation & Sustainability",
-    "Awards & Recognitions",
-    "Journals & Proceedings",
-    "Discover IAAM",
+    { title: "Membership", slug: "membership" },
+    { title: "Meetings & Events", slug: "meetings-events" },
+    { title: "Innovation & Sustainability", slug: "innovation-sustainability" },
+    { title: "Awards & Recognitions", slug: "awards-recognitions" },
+    { title: "Journals & Proceedings", slug: "journals-proceedings" },
+    { title: "Discover IAAM", slug: "discover-iaam" },
   ];
 
   const handleMouseEnter = (index: number) => {
-    // Clear any pending timeout
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current);
       timeoutRef.current = null;
     }
-    // Immediately show dropdown - yeh instantly change hoga
     setActiveDropdown(index);
   };
 
   const handleMouseLeave = () => {
-    // Clear existing timeout
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current);
     }
-    // Short delay before closing - user ko dropdown tak jaane ka time milega
     timeoutRef.current = setTimeout(() => {
       setActiveDropdown(null);
-    }, 200); // 1500ms se 200ms kar diya - ab fast close hoga
-  };
-
-  const closeDropdown = () => {
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
-    }
-    setActiveDropdown(null);
+    }, 200);
   };
 
   return (
@@ -57,43 +46,44 @@ export default function MainNav({ mobileMenuOpen }: MainNavProps) {
       <nav className="hidden lg:block w-full bg-white border-b border-border relative">
         <div className="max-w-[1440px] mx-auto px-[30px]">
           <ul className="flex items-center justify-between h-[48px]">
-            {navItems.map((item, index) => {
-              return (
-                <li key={item} className="relative h-full flex items-center">
-                  <button
-                    type="button"
-                    className="font-semibold text-[15px] text-iaam-text-dark hover:text-iaam-primary transition-colors flex items-center gap-1 px-2 py-2"
-                    onMouseEnter={() => handleMouseEnter(index)}
+            {navItems.map((item, index) => (
+              <li key={item.title} className="relative h-full flex items-center">
+                <button
+                  type="button"
+                  className="font-semibold text-[15px] text-iaam-text-dark hover:text-iaam-primary transition-colors flex items-center gap-1 px-2 py-2"
+                  onMouseEnter={() => handleMouseEnter(index)}
+                  onMouseLeave={handleMouseLeave}
+                >
+                  {item.title}
+                  <ChevronDown
+                    size={14}
+                    className={`transition-transform ${
+                      activeDropdown === index ? "rotate-180" : ""
+                    }`}
+                  />
+                </button>
+
+                {activeDropdown === index && (
+                  <div
+                    className="fixed left-0 right-0 top-[235px] w-full bg-white z-50 border-b border-border max-h-[calc(100vh-220px)] overflow-y-auto shadow-sm"
+                    onMouseEnter={() => {
+                      if (timeoutRef.current) {
+                        clearTimeout(timeoutRef.current);
+                        timeoutRef.current = null;
+                      }
+                    }}
                     onMouseLeave={handleMouseLeave}
                   >
-                    {item}
-                    <ChevronDown
-                      size={14}
-                      className={`transition-transform ${
-                        activeDropdown === index ? "rotate-180" : ""
-                      }`}
-                    />
-                  </button>
-                  {activeDropdown === index && (
-                    <div
-                      className="fixed left-0 right-0 top-[235px] w-full bg-white z-50 border-b border-border max-h-[calc(100vh-220px)] overflow-y-auto shadow-sm"
-                      onMouseEnter={() => {
-                        // Dropdown pe hover karne se timeout cancel ho jayega
-                        if (timeoutRef.current) {
-                          clearTimeout(timeoutRef.current);
-                          timeoutRef.current = null;
-                        }
-                      }}
-                      onMouseLeave={handleMouseLeave}
-                    >
-                      <div className="max-w-[1440px] mx-auto px-[30px] py-[25px]">
-                        <DropdownContent data={dropdownData[activeDropdown]} />
-                      </div>
+                    <div className="max-w-[1440px] mx-auto px-[30px] py-[25px]">
+                      <DropdownContent
+                        data={dropdownData[index]}
+                        parentSlug={item.slug}
+                      />
                     </div>
-                  )}
-                </li>
-              );
-            })}
+                  </div>
+                )}
+              </li>
+            ))}
           </ul>
         </div>
       </nav>
@@ -104,9 +94,10 @@ export default function MainNav({ mobileMenuOpen }: MainNavProps) {
           <div className="px-4 py-2 space-y-1 max-h-[calc(100vh-120px)] overflow-y-auto">
             {navItems.map((item, index) => (
               <MobileNavItem
-                key={item}
-                title={item}
+                key={item.title}
+                title={item.title}
                 data={dropdownData[index]}
+                parentSlug={item.slug}
               />
             ))}
           </div>
@@ -118,7 +109,13 @@ export default function MainNav({ mobileMenuOpen }: MainNavProps) {
 
 /* ================= DESKTOP DROPDOWN CONTENT ================= */
 
-const DropdownContent = ({ data }: { data: DropdownDataItem }) => {
+const DropdownContent = ({
+  data,
+  parentSlug,
+}: {
+  data: DropdownDataItem;
+  parentSlug: string;
+}) => {
   return (
     <div className="flex gap-[30px] pb-4 items-stretch">
       {/* LEFT CARD */}
@@ -141,14 +138,13 @@ const DropdownContent = ({ data }: { data: DropdownDataItem }) => {
             <h3 className="font-bold text-[20px] text-iaam-text-dark leading-tight tracking-[0.3px]">
               {data.card.title}
             </h3>
-
             <p className="text-[12px] text-iaam-text-body leading-[17px] mt-2">
               {data.card.description}
             </p>
           </div>
 
           <Link
-            href={data.card.ctaUrl}
+            href={`/${parentSlug}${data.card.ctaUrl}`}
             className="w-full py-[10px] px-[8px] bg-iaam-primary text-white font-medium text-[18px] rounded-[3px] shadow-md hover:brightness-110 transition text-center"
           >
             {data.card.cta}
@@ -162,7 +158,6 @@ const DropdownContent = ({ data }: { data: DropdownDataItem }) => {
           <h2 className="font-bold text-[24px] text-iaam-text-dark tracking-[0.36px]">
             {data.title}
           </h2>
-
           <p className="text-[18px] text-iaam-text-body leading-[25px] mt-4">
             {data.description}
           </p>
@@ -172,7 +167,7 @@ const DropdownContent = ({ data }: { data: DropdownDataItem }) => {
           <div className="flex justify-between items-start w-full">
             {data.outlineCta && data.outlineCtaUrl && (
               <Link
-                href={data.outlineCtaUrl}
+                href={`/${parentSlug}${data.outlineCtaUrl}`}
                 className="py-[16px] px-[8px] border border-iaam-primary text-iaam-primary font-medium text-[16px] rounded-[3px] hover:bg-iaam-primary hover:text-white transition"
               >
                 {data.outlineCta}
@@ -181,11 +176,11 @@ const DropdownContent = ({ data }: { data: DropdownDataItem }) => {
 
             {data.rightLinks && (
               <div className="flex flex-col gap-4 text-right">
-                {data.rightLinks.map((rl, idx) => (
+                {data.rightLinks.map((rl, idx) =>
                   rl.headerUrl ? (
                     <Link
                       key={idx}
-                      href={rl.headerUrl}
+                      href={`/${parentSlug}${rl.headerUrl}`}
                       className="font-bold text-[18px] text-iaam-primary hover:underline"
                     >
                       {rl.header}
@@ -198,12 +193,13 @@ const DropdownContent = ({ data }: { data: DropdownDataItem }) => {
                       {rl.header}
                     </span>
                   )
-                ))}
+                )}
               </div>
             )}
           </div>
         )}
 
+        {/* SPECIAL MEETING & EVENTS BANNER */}
         {data.title === "Meeting & Events" && (
           <div className="w-full py-[9px] px-[8px] bg-iaam-primary">
             <span className="font-roboto font-semibold text-[18px] text-white tracking-[0.27px]">
@@ -219,7 +215,7 @@ const DropdownContent = ({ data }: { data: DropdownDataItem }) => {
                 <div key={secIdx} className="flex flex-col gap-3">
                   {section.headerUrl ? (
                     <Link
-                      href={section.headerUrl}
+                      href={`/${parentSlug}${section.headerUrl}`}
                       className="font-bold text-[18px] text-iaam-section-header hover:text-iaam-primary transition-colors"
                     >
                       {section.header}
@@ -235,7 +231,7 @@ const DropdownContent = ({ data }: { data: DropdownDataItem }) => {
                       {section.links.map((link, linkIdx) => (
                         <Link
                           key={linkIdx}
-                          href={link.url}
+                          href={`/${parentSlug}${link.url}`}
                           className="text-[16px] text-[#1e40af]/70 hover:underline hover:text-iaam-primary transition-colors"
                         >
                           {link.text}
@@ -258,9 +254,11 @@ const DropdownContent = ({ data }: { data: DropdownDataItem }) => {
 const MobileNavItem = ({
   title,
   data,
+  parentSlug,
 }: {
   title: string;
   data: DropdownDataItem;
+  parentSlug: string;
 }) => {
   const [open, setOpen] = useState(false);
 
@@ -284,32 +282,29 @@ const MobileNavItem = ({
             {data.description}
           </p>
 
-          {/* Mobile Card CTA */}
           <Link
-            href={data.card.ctaUrl}
+            href={`/${parentSlug}${data.card.ctaUrl}`}
             className="block w-full py-[10px] px-[8px] bg-iaam-primary text-white font-medium text-[16px] rounded-[3px] shadow-md hover:brightness-110 transition text-center"
           >
             {data.card.cta}
           </Link>
 
-          {/* Mobile Outline CTA */}
           {data.outlineCta && data.outlineCtaUrl && (
             <Link
-              href={data.outlineCtaUrl}
+              href={`/${parentSlug}${data.outlineCtaUrl}`}
               className="block w-full py-[10px] px-[8px] border border-iaam-primary text-iaam-primary font-medium text-[14px] rounded-[3px] hover:bg-iaam-primary hover:text-white transition text-center"
             >
               {data.outlineCta}
             </Link>
           )}
 
-          {/* Mobile Right Links */}
           {data.rightLinks && (
             <div className="space-y-2">
-              {data.rightLinks.map((rl, idx) => (
+              {data.rightLinks.map((rl, idx) =>
                 rl.headerUrl ? (
                   <Link
                     key={idx}
-                    href={rl.headerUrl}
+                    href={`/${parentSlug}${rl.headerUrl}`}
                     className="block font-bold text-[14px] text-iaam-primary hover:underline"
                   >
                     {rl.header}
@@ -322,7 +317,7 @@ const MobileNavItem = ({
                     {rl.header}
                   </span>
                 )
-              ))}
+              )}
             </div>
           )}
 
@@ -332,7 +327,7 @@ const MobileNavItem = ({
                 <div key={secIdx}>
                   {section.headerUrl ? (
                     <Link
-                      href={section.headerUrl}
+                      href={`/${parentSlug}${section.headerUrl}`}
                       className="font-bold text-[14px] text-iaam-section-header hover:text-iaam-primary transition-colors"
                     >
                       {section.header}
@@ -348,7 +343,7 @@ const MobileNavItem = ({
                       {section.links.map((link, i) => (
                         <Link
                           key={i}
-                          href={link.url}
+                          href={`/${parentSlug}${link.url}`}
                           className="block text-[13px] text-iaam-link-light hover:underline"
                         >
                           {link.text}
