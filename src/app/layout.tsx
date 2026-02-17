@@ -32,7 +32,7 @@ export default function RootLayout({
         <ClientHeaderWrapper />
         
         {/* Content with padding for fixed header */}
-        <main className="pt-[90px] lg:pt-[200px]">
+        <main className="pt-[90px] md:pt-[140px] lg:pt-[235px]">
           {children}
         </main>
       </body>

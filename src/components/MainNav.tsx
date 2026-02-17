@@ -65,7 +65,8 @@ export default function MainNav({ mobileMenuOpen }: MainNavProps) {
 
                 {activeDropdown === index && (
                   <div
-                    className="fixed left-0 right-0 top-[235px] w-full bg-white z-50 border-b border-border max-h-[calc(100vh-220px)] overflow-y-auto shadow-sm"
+                    className="fixed inset-x-0 bg-white z-50 border-b border-border max-h-[calc(100vh-140px)] overflow-y-auto shadow-sm"
+                    style={{ top: 'var(--mainnav-dropdown-top, 235px)' }}
                     onMouseEnter={() => {
                       if (timeoutRef.current) {
                         clearTimeout(timeoutRef.current);

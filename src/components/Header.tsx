@@ -5,7 +5,7 @@ import { Search, Menu, X, ChevronRight, ArrowLeft } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function Header() {
+export default function Header({ isShrunk = false }: { isShrunk?: boolean }) {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const navItems = [
@@ -37,11 +37,19 @@ export default function Header() {
       {/* ================= HEADER ================= */}
       <header className="w-full bg-white border-b border-gray-200 relative z-50">
         <div className="max-w-[1440px] mx-auto px-4 lg:px-[30px]">
-          <div className="flex items-center justify-between py-4">
+          <div
+            className={`flex items-center justify-between transition-all duration-200 ${
+              isShrunk ? 'py-1.5' : 'py-4'
+            }`}
+          >
 
             {/* LEFT - Logo + Title */}
             <div className="flex items-center gap-3 sm:gap-4 flex-1 min-w-0">
-              <div className="w-[80px] sm:w-[110px] lg:w-[140px] flex-shrink-0">
+              <div
+                className={`flex-shrink-0 transition-all duration-200 ${
+                  isShrunk ? 'w-[46px] sm:w-[56px] lg:w-[64px]' : 'w-[80px] sm:w-[110px] lg:w-[140px]'
+                }`}
+              >
                 <Image
                   src="/1704818354IAAM-Logo-SVG 1.svg"
                   alt="IAAM Logo"
@@ -53,35 +61,53 @@ export default function Header() {
               </div>
 
               <div className="min-w-0">
-                <h1 className="font-bold text-[16px] sm:text-[20px] lg:text-[26px] xl:text-[30px] text-[#1e40af] leading-tight">
+                <h1
+                  className={
+                    `font-bold text-[#1e40af] leading-tight transition-all duration-200 ` +
+                    (isShrunk
+                      ? 'text-[13px] sm:text-[15px] lg:text-[18px] xl:text-[20px]'
+                      : 'text-[16px] sm:text-[20px] lg:text-[26px] xl:text-[30px]')
+                  }
+                >
                   International Association <br className="hidden sm:block" />
                   of Advanced Materials
                 </h1>
 
-                <p className="text-[10px] lg:text-[16px] text-gray-600 mt-1">
+                <p
+                  className={
+                    `text-gray-600 transition-all duration-200 ` +
+                    (isShrunk ? 'hidden lg:block lg:text-[11px] mt-0' : 'text-[10px] lg:text-[16px] mt-1')
+                  }
+                >
                   Integrating materials knowledge to achieve a sustainable planet.
                 </p>
               </div>
             </div>
 
             {/* ================= DESKTOP RIGHT SIDE ================= */}
-            <div className="hidden lg:flex items-center gap-4 ml-4">
-              <a
-                href="#"
-                className="border border-[#1e40af] text-[#1e40af] px-4 py-1.5 rounded hover:bg-[#1e40af] hover:text-white transition"
+            <div className={`hidden lg:flex items-center ml-4 transition-all duration-200 ${isShrunk ? 'gap-3' : 'gap-4'}`}>
+              <Link
+                href="/web-talks"
+                className={
+                  `border border-[#1e40af] text-[#1e40af] rounded hover:bg-[#1e40af] hover:text-white transition ` +
+                  (isShrunk ? 'px-3 py-1 text-[13px]' : 'px-4 py-1.5')
+                }
               >
                 Web Talks
-              </a>
+              </Link>
 
               <div className="relative">
                 <input
                   type="text"
                   placeholder="Search..."
-                  className="w-[200px] xl:w-[220px] border border-gray-300 rounded-md px-3 py-2 pr-10 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#1e40af] focus:border-[#1e40af]"
+                  className={
+                    `border border-gray-300 rounded-md text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#1e40af] focus:border-[#1e40af] ` +
+                    (isShrunk ? 'w-[170px] xl:w-[190px] px-3 py-1.5 pr-9' : 'w-[200px] xl:w-[220px] px-3 py-2 pr-10')
+                  }
                 />
                 <Search
                   className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400"
-                  size={16}
+                  size={isShrunk ? 14 : 16}
                 />
               </div>
             </div>

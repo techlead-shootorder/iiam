@@ -18,7 +18,7 @@ export default function HeroSection({ data }: Props) {
   const ctaLink = dynamicLink || staticLink;
 
   return (
-    <section className="relative w-full h-[460px] overflow-hidden lg:mt-8 bg-black">
+    <section className="relative w-full h-[460px] overflow-hidden bg-black">
       {/* ===== BACKGROUND IMAGE ===== */}
       {imageUrl && (
         <img
