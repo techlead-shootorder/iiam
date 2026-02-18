@@ -26,9 +26,11 @@ export default function MainNav({ mobileMenuOpen }: MainNavProps) {
   const handleMouseEnter = (index: number) => {
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current);
-      timeoutRef.current = null;
+      timeoutRef.current = setTimeout(() => {
+      setActiveDropdown(index);
+    }, 500);
     }
-    setActiveDropdown(index);
+    // setActiveDropdown(index);
   };
 
   const handleMouseLeave = () => {
