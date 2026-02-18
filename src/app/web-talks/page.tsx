@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { ChevronRight, ChevronLeft, User, Calendar, Eye } from 'lucide-react';
 import Footer from '@/components/FooterNew';
+import SecureCloudflareVideo from '@/components/WebTalk/SecureCloudflareVideo';
 
 const CATEGORIES = [
   'All',
@@ -27,11 +28,19 @@ interface VideoCardProps {
   date: string;
   views: string;
   category: string;
+  videoId?: string;
+  onPlay?: (videoId: string) => void;
 }
 
-function VideoCard({ thumbnail, duration = '05:32', title, author, date, views, category }: VideoCardProps) {
+function VideoCard({ thumbnail, duration = '05:32', title, author, date, views, category, videoId, onPlay }: VideoCardProps) {
+  const handleClick = () => {
+    if (videoId && onPlay) {
+      onPlay(videoId);
+    }
+  };
+
   return (
-    <div className="bg-white rounded-[10px] shadow-[2.7px_5.4px_25.6px_rgba(0,0,0,0.10)] overflow-hidden ring-[8px] ring-white flex flex-col group cursor-pointer hover:shadow-[2.7px_5.4px_40px_rgba(0,0,0,0.16)] transition-shadow duration-300">
+    <div onClick={handleClick} className="bg-white rounded-[10px] shadow-[2.7px_5.4px_25.6px_rgba(0,0,0,0.10)] overflow-hidden ring-[8px] ring-white flex flex-col group cursor-pointer hover:shadow-[2.7px_5.4px_40px_rgba(0,0,0,0.16)] transition-shadow duration-300">
 
       {/* Thumbnail */}
       <div className="relative w-full aspect-[449/269] bg-[#F3F3F3] overflow-hidden flex-shrink-0">
@@ -161,6 +170,7 @@ const FEATURED_VIDEOS: VideoCardProps[] = [
     date: 'Dec 14, 2023',
     views: '12.2K Views',
     category: 'Research Highlights',
+    videoId: 'ba9870a482ae23109e437e6d56e53242',
   },
   {
     thumbnail: 'https://images.unsplash.com/photo-1587825140708-dfaf72ae4b04?w=500&q=80',
@@ -170,6 +180,7 @@ const FEATURED_VIDEOS: VideoCardProps[] = [
     date: 'Dec 14, 2023',
     views: '12.2K Views',
     category: 'Research Highlights',
+    videoId: 'ba9870a482ae23109e437e6d56e53242',
   },
   {
     thumbnail: 'https://images.unsplash.com/photo-1475721027785-f74eccf877e2?w=500&q=80',
@@ -179,6 +190,7 @@ const FEATURED_VIDEOS: VideoCardProps[] = [
     date: 'Dec 14, 2023',
     views: '12.2K Views',
     category: 'Research Highlights',
+    videoId: 'ba9870a482ae23109e437e6d56e53242',
   },
   {
     thumbnail: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=500&q=80',
@@ -188,6 +200,7 @@ const FEATURED_VIDEOS: VideoCardProps[] = [
     date: 'Dec 14, 2023',
     views: '12.2K Views',
     category: 'Research Highlights',
+    videoId: 'ba9870a482ae23109e437e6d56e53242',
   },
   {
     thumbnail: 'https://images.unsplash.com/photo-1556761175-4b46a572b786?w=500&q=80',
@@ -197,6 +210,7 @@ const FEATURED_VIDEOS: VideoCardProps[] = [
     date: 'Dec 14, 2023',
     views: '12.2K Views',
     category: 'Research Highlights',
+    videoId: 'ba9870a482ae23109e437e6d56e53242',
   },
   {
     thumbnail: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=500&q=80',
@@ -206,6 +220,7 @@ const FEATURED_VIDEOS: VideoCardProps[] = [
     date: 'Dec 14, 2023',
     views: '12.2K Views',
     category: 'Research Highlights',
+    videoId: 'ba9870a482ae23109e437e6d56e53242',
   },
 ];
 
@@ -218,6 +233,7 @@ const CATEGORY_VIDEOS: VideoCardProps[] = [
     date: 'Dec 14, 2023',
     views: '12.2K Views',
     category: 'Research Highlights',
+    videoId: 'ba9870a482ae23109e437e6d56e53242',
   },
   {
     thumbnail: 'https://images.unsplash.com/photo-1605810230434-7631ac76ec81?w=500&q=80',
@@ -227,6 +243,7 @@ const CATEGORY_VIDEOS: VideoCardProps[] = [
     date: 'Dec 14, 2023',
     views: '12.2K Views',
     category: 'Research Highlights',
+    videoId: 'ba9870a482ae23109e437e6d56e53242',
   },
   {
     thumbnail: 'https://images.unsplash.com/photo-1528605248644-14dd04022da1?w=500&q=80',
@@ -236,6 +253,7 @@ const CATEGORY_VIDEOS: VideoCardProps[] = [
     date: 'Dec 14, 2023',
     views: '12.2K Views',
     category: 'Research Highlights',
+    videoId: 'ba9870a482ae23109e437e6d56e53242',
   },
   {
     thumbnail: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=500&q=80',
@@ -245,6 +263,7 @@ const CATEGORY_VIDEOS: VideoCardProps[] = [
     date: 'Dec 14, 2023',
     views: '12.2K Views',
     category: 'Research Highlights',
+    videoId: 'ba9870a482ae23109e437e6d56e53242',
   },
   {
     thumbnail: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=500&q=80',
@@ -254,6 +273,7 @@ const CATEGORY_VIDEOS: VideoCardProps[] = [
     date: 'Dec 14, 2023',
     views: '12.2K Views',
     category: 'Research Highlights',
+    videoId: 'ba9870a482ae23109e437e6d56e53242',
   },
   {
     thumbnail: 'https://images.unsplash.com/photo-1517048676732-d65bc937f952?w=500&q=80',
@@ -263,6 +283,7 @@ const CATEGORY_VIDEOS: VideoCardProps[] = [
     date: 'Dec 14, 2023',
     views: '12.2K Views',
     category: 'Research Highlights',
+    videoId: 'ba9870a482ae23109e437e6d56e53242',
   },
   {
     thumbnail: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=500&q=80',
@@ -272,6 +293,7 @@ const CATEGORY_VIDEOS: VideoCardProps[] = [
     date: 'Dec 14, 2023',
     views: '12.2K Views',
     category: 'Research Highlights',
+    videoId: 'ba9870a482ae23109e437e6d56e53242',
   },
   {
     thumbnail: 'https://images.unsplash.com/photo-1543269664-76bc3997d9ea?w=500&q=80',
@@ -281,6 +303,7 @@ const CATEGORY_VIDEOS: VideoCardProps[] = [
     date: 'Dec 14, 2023',
     views: '12.2K Views',
     category: 'Research Highlights',
+    videoId: 'ba9870a482ae23109e437e6d56e53242',
   },
   {
     thumbnail: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=500&q=80',
@@ -290,8 +313,53 @@ const CATEGORY_VIDEOS: VideoCardProps[] = [
     date: 'Dec 14, 2023',
     views: '12.2K Views',
     category: 'Research Highlights',
+    videoId: 'ba9870a482ae23109e437e6d56e53242',
   },
 ];
+
+/* ────────────────────────────────────────────────────────────────
+   Video Modal
+──────────────────────────────────────────────────────────────── */
+interface VideoModalProps {
+  isOpen: boolean;
+  videoId: string | null;
+  title?: string;
+  onClose: () => void;
+}
+
+function VideoModal({ isOpen, videoId, title, onClose }: VideoModalProps) {
+  if (!isOpen || !videoId) return null;
+
+  return (
+    <div
+      className="fixed inset-0 bg-black/70 z-50 flex items-center justify-center p-4"
+      onClick={onClose}
+    >
+      <div
+        className="w-full max-w-4xl bg-white rounded-lg overflow-hidden"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Close button */}
+        <div className="flex justify-between items-center p-4 border-b">
+          <h3 className="text-lg font-semibold text-[#1E1E1E] truncate">
+            {title || 'Video'}
+          </h3>
+          <button
+            onClick={onClose}
+            className="text-[#757575] hover:text-[#1E1E1E] text-2xl leading-none"
+          >
+            ×
+          </button>
+        </div>
+
+        {/* Video player */}
+        <div className="p-4 bg-[#F3F3F3]">
+          <SecureCloudflareVideo videoId={videoId} />
+        </div>
+      </div>
+    </div>
+  );
+}
 
 /* ────────────────────────────────────────────────────────────────
    MAIN PAGE EXPORT
@@ -299,9 +367,27 @@ const CATEGORY_VIDEOS: VideoCardProps[] = [
 export default function WebTalksPage() {
   const [activeCategory, setActiveCategory] = useState('All');
   const [currentPage, setCurrentPage] = useState(1);
+  const [selectedVideo, setSelectedVideo] = useState<{ id: string; title: string } | null>(null);
+
+  const handlePlayVideo = (videoId: string, videoTitle?: string) => {
+    setSelectedVideo({
+      id: videoId,
+      title: videoTitle || 'Video',
+    });
+  };
+
+  const handleCloseModal = () => {
+    setSelectedVideo(null);
+  };
 
   return (
     <>
+      <VideoModal
+        isOpen={!!selectedVideo}
+        videoId={selectedVideo?.id || null}
+        title={selectedVideo?.title}
+        onClose={handleCloseModal}
+      />
       <main className="flex-1 bg-white">
         <div className="max-w-[1440px] mx-auto px-4 lg:px-[30px] py-10 flex flex-col gap-[90px]">
 
@@ -336,14 +422,22 @@ export default function WebTalksPage() {
             {/* Grid row 1 */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {FEATURED_VIDEOS.slice(0, 3).map((v, i) => (
-                <VideoCard key={i} {...v} />
+                <VideoCard
+                  key={i}
+                  {...v}
+                  onPlay={(videoId) => handlePlayVideo(videoId, v.title)}
+                />
               ))}
             </div>
 
             {/* Grid row 2 */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {FEATURED_VIDEOS.slice(3, 6).map((v, i) => (
-                <VideoCard key={i} {...v} />
+                <VideoCard
+                  key={i}
+                  {...v}
+                  onPlay={(videoId) => handlePlayVideo(videoId, v.title)}
+                />
               ))}
             </div>
 
@@ -383,21 +477,33 @@ export default function WebTalksPage() {
             {/* Grid row 1 */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {CATEGORY_VIDEOS.slice(0, 3).map((v, i) => (
-                <VideoCard key={i} {...v} />
+                <VideoCard
+                  key={i}
+                  {...v}
+                  onPlay={(videoId) => handlePlayVideo(videoId, v.title)}
+                />
               ))}
             </div>
 
             {/* Grid row 2 */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {CATEGORY_VIDEOS.slice(3, 6).map((v, i) => (
-                <VideoCard key={i} {...v} />
+                <VideoCard
+                  key={i}
+                  {...v}
+                  onPlay={(videoId) => handlePlayVideo(videoId, v.title)}
+                />
               ))}
             </div>
 
             {/* Grid row 3 */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {CATEGORY_VIDEOS.slice(6, 9).map((v, i) => (
-                <VideoCard key={i} {...v} />
+                <VideoCard
+                  key={i}
+                  {...v}
+                  onPlay={(videoId) => handlePlayVideo(videoId, v.title)}
+                />
               ))}
             </div>
 
