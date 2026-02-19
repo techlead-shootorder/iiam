@@ -2,6 +2,11 @@
 
 import { useEffect, useState } from "react";
 import { List } from "lucide-react";
+import LazyImage from "@/components/common/LazyImage";
+
+const API =
+  process.env.NEXT_PUBLIC_STRAPI_URL?.replace(/\/$/, "") ||
+  "http://admin.iaamonline.org";
 
 export default function ContentSection({ sections = [] }: any) {
   const [active, setActive] = useState("");
@@ -41,9 +46,9 @@ export default function ContentSection({ sections = [] }: any) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10">
         <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
 
-          {/* Sidebar */}
+          {/* ================= SIDEBAR ================= */}
           <aside className="w-full lg:w-[300px] lg:sticky lg:top-60 self-start">
-            <div className="flex items-center gap-2 mb-4 pt-lg-5 text-[15px] font-medium text-gray-900">
+            <div className="flex items-center gap-2 mb-4 text-[15px] font-medium text-gray-900">
               <List size={18} />
               Page contents
             </div>
@@ -81,25 +86,65 @@ export default function ContentSection({ sections = [] }: any) {
             </div>
           </aside>
 
-          {/* Content */}
-          <main className="flex-1 space-y-12">
+          {/* ================= CONTENT ================= */}
+          <main className="flex-1 space-y-16">
             {sections.map((s: any, i: number) => {
               if (!s?.Heading) return null;
 
               const id = s.Heading.replace(/\s+/g, "-");
 
+              const imageUrl =
+                s?.Image?.url && (s?.ImagePostion === "Left" || s?.ImagePostion === "Right")
+                  ? `${API}${s.Image.url}`
+                  : null;
+
+              const isRight = s?.ImagePostion === "Right";
+
               return (
                 <section id={id} key={i} className="scroll-mt-60">
-                  <h2 className="text-[40px] leading-[48px] font-light mb-4">
+                  <h2 className="text-[40px] leading-[48px] font-light mb-6">
                     {s.Heading}
                   </h2>
 
-                  <div className="max-w-3xl text-[18px] leading-[28px] text-gray-800 space-y-4">
-                    {Array.isArray(s.Description) &&
-                      s.Description.map((block: any, idx: number) => (
-                        <p key={idx}>{block.children?.[0]?.text}</p>
-                      ))}
-                  </div>
+                  {/* ======= IF IMAGE EXISTS AND POSITION IS LEFT OR RIGHT ======= */}
+                  {imageUrl ? (
+                    <div
+                      className={`flex flex-col lg:flex-row gap-10 items-start
+                        ${isRight ? "lg:flex-row-reverse" : ""}
+                      `}
+                    >
+                      {/* IMAGE */}
+                      <div className="w-full lg:w-[40%]">
+                        <LazyImage
+                          src={imageUrl}
+                          alt={s?.Heading}
+                          width={400}
+                          height={350}
+                          className="w-full max-h-[350px] object-contain rounded-lg"
+                        />
+                      </div>
+
+                      {/* TEXT */}
+                      <div className="w-full lg:w-[60%] text-[18px] leading-[28px] text-gray-800 space-y-4">
+                        {Array.isArray(s.Description) &&
+                          s.Description.map((block: any, idx: number) => (
+                            <p key={idx}>
+                              {block.children?.[0]?.text}
+                            </p>
+                          ))}
+                      </div>
+                    </div>
+                  ) : (
+                    /* ======= NO IMAGE OR POSITION NONE ======= */
+                    <div className="max-w-3xl text-[18px] leading-[28px] text-gray-800 space-y-4">
+                      {Array.isArray(s.Description) &&
+                        s.Description.map((block: any, idx: number) => (
+                          <p key={idx}>
+                            {block.children?.[0]?.text}
+                          </p>
+                        ))}
+                    </div>
+                  )}
                 </section>
               );
             })}

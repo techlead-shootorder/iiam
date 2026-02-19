@@ -1,59 +1,31 @@
-import Image from "next/image";
+import LazyImage from "@/components/common/LazyImage";
 import Link from "next/link";
 
 const STRAPI_BASE_URL =
-  process.env.NEXT_PUBLIC_STRAPI_URL || "https://admin.iaamonline.org";
-
-// Cache the fetch request at module level to prevent repeated calls
-let heroDataCache: any = null;
-let cacheTime = 0;
-const CACHE_DURATION = 300000; // 5 minutes in milliseconds
-
-async function getHeroData() {
-  try {
-    // Check if we have valid cached data
-    const now = Date.now();
-    if (heroDataCache && (now - cacheTime) < CACHE_DURATION) {
-      return heroDataCache;
-    }
-
-    const response = await fetch(
-      `${STRAPI_BASE_URL}/api/home?populate[HeroBanner][populate]=*`,
-      {
-        cache: "force-cache",
-        next: { revalidate: 300 }
-      }
-    );
-
-    if (!response.ok) {
-      console.error("Hero API Error:", response.status, response.statusText);
-      return heroDataCache || null;
-    }
-
-    const result = await response.json();
-    const heroData = result?.data?.HeroBanner || null;
-    
-    // Update cache
-    heroDataCache = heroData;
-    cacheTime = now;
-    
-    return heroData;
-  } catch (error) {
-    console.error("Error in getHeroData:", error);
-    // Return cached data if available, otherwise null
-    return heroDataCache || null;
-  }
-}
+  process.env.NEXT_PUBLIC_STRAPI_URL?.replace(/\/$/, "") ||
+  "https://admin.iaamonline.org";
 
 export default async function HeroSection() {
-  const heroData = await getHeroData();
-  if (!heroData) return null;
 
-  const imageObj = heroData?.HeroBanner;
+  const res = await fetch(
+    `${STRAPI_BASE_URL}/api/home?populate[HeroBanner][populate]=*`,
+    {
+      next: { revalidate: 300 }
+    }
+  );
 
+  if (!res.ok) return null;
+
+  const json = await res.json();
+  const hero = json?.data?.HeroBanner;
+  if (!hero) return null;
+
+  const imageObj = hero?.HeroBanner;
+
+  // 🔥 Use medium format for faster load
   const imagePath =
-    imageObj?.formats?.large?.url ||
     imageObj?.formats?.medium?.url ||
+    imageObj?.formats?.small?.url ||
     imageObj?.url ||
     null;
 
@@ -61,43 +33,56 @@ export default async function HeroSection() {
     ? `${STRAPI_BASE_URL}${imagePath}`
     : null;
 
+  const dynamicLabel = hero?.HeroBannerButtonLabel;
+  const dynamicLink = hero?.HeroBannerButtonLink;
+
+  const staticLabel = "Join or Renew Membership";
+  const staticLink = "/membership";
+
+  const ctaLabel = dynamicLabel || staticLabel;
+  const ctaLink = dynamicLink || staticLink;
+
   return (
-    <section className="relative h-[400px] md:h-[460px] overflow-hidden">
-      {/* Background */}
+    <section className="relative w-full h-[460px] bg-black">
+
+      {/* ===== HERO IMAGE ===== */}
       {imageUrl && (
-        <Image
+        <LazyImage
           src={imageUrl}
-          alt={
-            imageObj?.alternativeText ||
-            heroData?.HeroBannerTitle ||
-            "Hero Banner"
-          }
+          alt={hero?.HeroBannerTitle || "Hero Banner"}
           fill
           priority
           className="object-cover"
+          containerClassName="absolute inset-0"
         />
       )}
 
-      <div className="absolute inset-0 bg-black/40" />
+      {/* ===== CONTENT ===== */}
+      <div className="absolute inset-0 flex items-start justify-start z-10">
+        <div className="w-full max-w-7xl px-14 text-white pt-24">
 
-      <div className="relative container mx-auto px-4 h-full flex flex-col justify-center max-w-6xl">
-        <h1 className="text-3xl md:text-4xl lg:text-5xl text-white mb-4 max-w-2xl leading-tight">
-          {heroData?.HeroBannerTitle}
-        </h1>
+          <h1 className="text-3xl md:text-4xl lg:text-5xl max-w-3xl leading-tight">
+            {hero?.HeroBannerTitle}
+          </h1>
 
-        <p className="text-white/90 text-base md:text-lg mb-8 max-w-xl">
-          {heroData?.HeroBannerDescription}
-        </p>
+          {hero?.HeroBannerDescription && (
+            <p className="mt-4 text-lg max-w-2xl">
+              {hero.HeroBannerDescription}
+            </p>
+          )}
 
-        {heroData?.HeroBannerButtonLabel && (
-          <Link
-            href="#"
-            className="bg-iaam-primary font-bold hover:bg-white hover:text-iaam-primary text-white px-6 py-3 rounded-sm w-fit transition-colors"
-          >
-            {heroData.HeroBannerButtonLabel}
-          </Link>
-        )}
+          <div className="mt-6">
+            <Link
+              href={ctaLink}
+              className="bg-[#1e40af] px-8 py-3 rounded-md font-semibold text-white"
+            >
+              {ctaLabel}
+            </Link>
+          </div>
+
+        </div>
       </div>
+
     </section>
   );
 }
